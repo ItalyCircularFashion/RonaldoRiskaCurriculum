@@ -57,7 +57,7 @@ const software = [
     benefits: 'Trasforma il CV in hub consultabile: business intelligence tessile, articoli tecnici, fonti e proof of performance.',
     tags: ['Portfolio', 'BI', 'Magazine', 'SEO'],
     link: '#home',
-    shot: 'assets/pagespeed-mobile.png',
+    shot: 'pagespeed-mobile.png',
     shotLabel: 'PageSpeed',
     shotSub: '98 mobile / 100 desktop',
     kpis: [['12', 'articoli'], ['8', 'research'], ['100', 'SEO']]
