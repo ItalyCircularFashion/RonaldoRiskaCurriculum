@@ -34,7 +34,7 @@ const software = [
     problem: 'I processi tessili sono spesso frammentati tra reparti, email, fogli Excel e conoscenza non documentata.',
     benefits: 'Standardizza input, output e ragionamento operativo; rende replicabili analisi strategiche, make-or-buy, downtime, forecasting e spedizioni.',
     tags: ['AI workflow', 'ERP', 'Process engineering', 'Textile ops'],
-    link: 'showcase/tessile-erp.html',
+    link: 'tessile-erp.html',
     shotLabel: '14 reparti',
     shotSub: '28 workflow AI',
     kpis: [['14', 'dipartimenti'], ['28', 'workflow'], ['ERP', 'grade']]
@@ -45,7 +45,7 @@ const software = [
     problem: 'La pianificazione progetto perde precisione quando tempi, costi, responsabilita e percorso critico vivono in strumenti separati.',
     benefits: 'Unifica scheduling, costo, stato, float e milestone in un ambiente operativo editabile.',
     tags: ['PMBOK', 'Gantt', 'CPM', 'PERT', 'Budget'],
-    link: 'showcase/projectrak-pm-suite.html',
+    link: 'projectrak-pm-suite.html',
     shotLabel: 'CPM',
     shotSub: 'Gantt + PERT',
     kpis: [['WBS', 'strutturata'], ['Float', 'calcolato'], ['JSON', 'import/export']]
@@ -68,8 +68,8 @@ const software = [
     problem: 'Il flusso di produzione e la gestione scorte intermedie richiedono regole visive semplici e limiti WIP misurabili.',
     benefits: 'Rende visibili sovraccarichi, priorita, batch, scorta di sicurezza e cartellini necessari.',
     tags: ['Lean', 'Kanban', 'WIP', 'CSV'],
-    link: 'showcase/kanban-industriale.html',
-    altLink: 'showcase/kanbanflow.html',
+    link: 'kanban-industriale.html',
+    altLink: 'kanbanflow.html',
     shotLabel: 'Lean flow',
     shotSub: 'WIP + cartellini',
     kpis: [['WIP', 'limit'], ['CSV', 'export'], ['Batch', 'safety stock']]
