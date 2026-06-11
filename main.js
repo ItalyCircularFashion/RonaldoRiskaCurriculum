@@ -5,7 +5,7 @@
 (function(){ const t=localStorage.getItem('tip-theme')||'dark'; document.documentElement.setAttribute('data-theme',t); })();
 
 function syncTheme(){
-  const t=document.documentElement.getAttribute('data-theme')||'dark';
+  const t=document.documentElement.getAttribute('data-theme')||'light';
   document.querySelectorAll('[data-theme-toggle]').forEach(b=>{b.textContent=t==='dark'?'☀ Light':'● Dark';});
 }
 document.addEventListener('click',e=>{
