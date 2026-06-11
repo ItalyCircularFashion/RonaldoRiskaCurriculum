@@ -1,25 +1,60 @@
 :root {
   color-scheme: light;
-  --paper: #f6f4ef;
-  --paper-2: #ebe7de;
-  --ink: #16211f;
-  --muted: #66716d;
-  --line: #d7d0c4;
-  --pine: #12352e;
-  --leaf: #2e7d52;
-  --sea: #0b7f86;
-  --indigo: #4251a6;
-  --copper: #b86a3a;
-  --plum: #6b4e7a;
-  --gold: #b9933d;
-  --danger: #b8473f;
-  --white: #ffffff;
-  --shadow: 0 18px 50px rgba(21, 31, 28, 0.12);
-  --r: 8px;
-  --max: 1180px;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
 
+  /* FOUNDATION */
+  --color-bg: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-surface-alt: #ebe7de;
+  --color-border: #d7d0c4;
+
+  /* TYPO */
+  --color-text: #16211f;
+  --color-text-muted: #66716d;
+
+  /* BRAND */
+  --color-primary: #12352e;
+  --color-secondary: #0b7f86;
+
+  /* STATUS */
+  --color-success: #2e7d52;
+  --color-warning: #b9933d;
+  --color-danger: #b8473f;
+  --color-info: #4251a6;
+
+  /* ACCENTS */
+  --color-accent-1: #b86a3a;
+  --color-accent-2: #6b4e7a;
+
+  /* EFFECTS */
+  --shadow-md: 0 18px 50px rgba(21, 31, 28, 0.12);
+  --radius-sm: 8px;
+
+  /* LAYOUT */
+  --container: 1180px;
+
+  /* ===== VARIABILI MANCANTI (aggiunte) ===== */
+  
+  /* alias per semplificare il codice */
+  --r: var(--radius-sm);           /* raggio usato in molti punti */
+  --white: #ffffff;                /* equivalente a --color-surface */
+  --muted: var(--color-text-muted);
+  --line: var(--color-border);
+  --max: var(--container);
+  --paper: #faf9f5;                /* sfondo per card in sezioni alternate */
+  --ink: #16211f;                  /* colore testo scuro, uguale a --color-text */
+
+  /* colori tematici (alias dei colori esistenti per chiarezza semantica) */
+  --pine: var(--color-primary);    /* #12352e */
+  --sea: var(--color-secondary);   /* #0b7f86 */
+  --copper: var(--color-accent-1); /* #b86a3a */
+  --gold: var(--color-warning);    /* #b9933d */
+  --indigo: var(--color-info);     /* #4251a6 */
+  --leaf: var(--color-success);    /* #2e7d52 */
+  --danger: var(--color-danger);   /* #b8473f */
+
+  /* TYPOGRAPHY (valori corretti per pesi font non standard) */
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
 * {
   box-sizing: border-box;
 }
@@ -30,8 +65,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--color-bg);
+  color: var(--color-text);
   line-height: 1.5;
 }
 
@@ -50,9 +85,9 @@ a {
   top: -5rem;
   z-index: 100;
   padding: 0.7rem 1rem;
-  background: var(--ink);
-  color: var(--white);
-  border-radius: var(--r);
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border-radius: var(--radius-sm);
 }
 
 .skip-link:focus {
@@ -68,8 +103,8 @@ a {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.9rem clamp(1rem, 4vw, 2rem);
-  background: rgba(246, 244, 239, 0.94);
-  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--color-text-muted);
   backdrop-filter: blur(14px);
 }
 
@@ -86,8 +121,8 @@ a {
   display: grid;
   place-items: center;
   border-radius: var(--r);
-  background: var(--pine);
-  color: var(--white);
+  background: var(--color-primary);
+  color: var(--color-surface);
   font-weight: 800;
   letter-spacing: 0.03em;
 }
@@ -102,7 +137,7 @@ a {
 }
 
 .brand small {
-  color: var(--muted);
+  color: var(--color-text-muted);
   font-size: 0.72rem;
 }
 
@@ -118,22 +153,22 @@ a {
   text-decoration: none;
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--color-text-muted);
   padding: 0.45rem 0.6rem;
   border-radius: var(--r);
 }
 
 .site-nav a:hover,
 .site-nav a:focus-visible {
-  color: var(--ink);
-  background: var(--paper-2);
+  color: var(--color-text);
+  background: var(--color-surface-alt);
 }
 
 .nav-toggle {
   display: none;
-  border: 1px solid var(--line);
-  background: var(--white);
-  color: var(--ink);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
   border-radius: var(--r);
   padding: 0.55rem 0.75rem;
   font-weight: 800;
@@ -160,14 +195,14 @@ a {
 
 .hero-lede {
   max-width: 66ch;
-  color: #44504c;
+  color: var(--color-text-muted);
   font-size: clamp(1rem, 2vw, 1.2rem);
   margin: 1.6rem 0 0;
 }
 
 .eyebrow {
   margin: 0 0 0.7rem;
-  color: var(--copper);
+  color: var(--color-accent-1);
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.13em;
@@ -190,31 +225,28 @@ a {
   padding: 0.7rem 0.95rem;
   border-radius: var(--r);
   text-decoration: none;
-  font-weight: 850;
+  font-weight: 800;
   border: 1px solid transparent;
 }
 
 .btn.primary {
-  background: var(--pine);
-  color: var(--white);
+  background: var(--color-primary);
 }
 
 .btn.secondary {
-  background: var(--white);
-  border-color: var(--line);
+  background: var(--color-surface);
+  border-color: var(--color-border);
 }
 
 .btn.ghost {
-  color: var(--pine);
-  border-color: rgba(18, 53, 46, 0.25);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .hero-proof {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  box-shadow: var(--shadow);
-  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
 }
 
 .proof-header {
@@ -231,8 +263,8 @@ a {
   aspect-ratio: 1.15 / 1;
   object-fit: cover;
   object-position: 50% 18%;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .proof-metrics {
@@ -251,7 +283,7 @@ a {
 }
 
 .proof-metrics dt {
-  color: var(--muted);
+  color: var(--color-text-muted);
   font-size: 0.68rem;
   text-transform: uppercase;
   font-weight: 800;
@@ -259,7 +291,7 @@ a {
 
 .proof-metrics dd {
   margin: 0.2rem 0 0;
-  color: var(--leaf);
+  color: var(--color-success);
   font-size: 1.1rem;
   font-weight: 900;
 }
@@ -274,27 +306,25 @@ a {
 }
 
 .metric {
-  background: var(--pine);
-  color: var(--white);
-  padding: 1.2rem;
+  background: var(--color-primary);
 }
 
 .metric:nth-child(2) {
-  background: var(--sea);
+  background: var(--color-secondary);
 }
 
 .metric:nth-child(3) {
-  background: var(--indigo);
+  background: var(--color-info);
 }
 
 .metric:nth-child(4) {
-  background: var(--copper);
+  background: var(--color-accent-1);
 }
 
 .metric span {
   display: block;
   font-size: clamp(2rem, 5vw, 3.4rem);
-  font-weight: 950;
+  font-weight: 900;
   line-height: 1;
 }
 
@@ -555,7 +585,7 @@ a {
   background: rgba(18, 53, 46, 0.08);
   color: var(--pine);
   font-size: 0.68rem;
-  font-weight: 850;
+  font-weight: 800;
 }
 
 .software-shot {
@@ -595,7 +625,7 @@ a {
 .software-kpis div {
   background: rgba(255, 255, 255, 0.12);
   padding: 0.55rem;
-  border-radius: var(--r);
+  border-radius: var(--radius-sm);
 }
 
 .software-kpis b,
@@ -619,9 +649,9 @@ a {
 }
 
 .feature-article {
-  background: var(--ink);
+  background: var(--color-primary);
   color: var(--white);
-  border-radius: var(--r);
+  border-radius: var(--radius-sm);
   padding: 1.4rem;
   min-height: 390px;
   display: flex;
@@ -661,7 +691,7 @@ a {
 
 .article-number {
   color: var(--copper);
-  font-weight: 950;
+  font-weight: 900;
   margin-bottom: 0.6rem;
 }
 
@@ -763,7 +793,7 @@ a {
 
 .material-price {
   font-size: 1.6rem;
-  font-weight: 950;
+  font-weight: 900;
   line-height: 1;
   margin: 0.8rem 0 0.35rem;
 }
@@ -933,7 +963,7 @@ a {
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: var(--r);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-md);
     padding: 0.7rem;
     justify-content: flex-start;
   }
