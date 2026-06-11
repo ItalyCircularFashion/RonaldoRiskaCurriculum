@@ -10,7 +10,7 @@ function syncTheme(){
 }
 document.addEventListener('click',e=>{
   if(!e.target.matches('[data-theme-toggle]'))return;
-  const n=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  const n=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
   document.documentElement.setAttribute('data-theme',n);
   localStorage.setItem('tip-theme',n);
   syncTheme();
