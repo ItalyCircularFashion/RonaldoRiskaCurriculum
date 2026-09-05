@@ -29,6 +29,10 @@
 
 <!-- MATRIX RAIN -->
 <canvas id="matrixRain"></canvas>
+<div id="matrixGlow"></div>
+
+<!-- POWER FLASH -->
+<div id="powerFlash"></div>
 
 <!-- BOOT SEQUENCE -->
 <div id="bootSequence">
@@ -284,64 +288,207 @@
 
 <!-- ═══════════ SCRIPTS ═══════════ -->
 <script>
-// ── MATRIX RAIN ──
+// ── MATRIX RAIN — CYBERPUNK BOOT SEQUENCE ──
 (function(){
   const canvas = document.getElementById('matrixRain');
   const ctx = canvas.getContext('2d');
-  let w, h;
-  function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-  const cols = Math.floor(w / 20);
-  const drops = Array(cols).fill(1);
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
-  function draw(){
-    ctx.fillStyle = 'rgba(5,6,10,0.05)';
-    ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = '14px monospace';
-    for(let i = 0; i < drops.length; i++){
-      const text = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillText(text, i * 20, drops[i] * 20);
-      if(drops[i] * 20 > h && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
+  const glow = document.getElementById('matrixGlow');
+  let w, h, cols, drops, fontSize, speed, opacity, colorMode;
+  
+  // Phase: 'boot' (dramatic) → 'ambient' (subtle)
+  let phase = 'boot';
+  let phaseStart = Date.now();
+  
+  function init(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    fontSize = 16;
+    cols = Math.floor(w / fontSize);
+    drops = Array.from({length: cols}, () => ({
+      y: Math.random() * -100,
+      speed: 1 + Math.random() * 3,
+      chars: [],
+      trail: 8 + Math.floor(Math.random() * 16),
+      hue: Math.random() > 0.7 ? 'cyan' : (Math.random() > 0.5 ? 'magenta' : 'green')
+    }));
+    for(let i = 0; i < cols; i++){
+      drops[i].chars = Array(drops[i].trail).fill(0).map(() => randChar());
     }
+  }
+  
+  function randChar(){
+    const sets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]|;:<>?/~ぁあいうえおかきくけこ';
+    return sets[Math.floor(Math.random() * sets.length)];
+  }
+  
+  init();
+  window.addEventListener('resize', init);
+  
+  function getColor(hue, isHead){
+    if(isHead) return '#ffffff';
+    if(hue === 'cyan') return '#00f0ff';
+    if(hue === 'magenta') return '#ff00aa';
+    return '#39ff14';
+  }
+  
+  function draw(){
+    const elapsed = Date.now() - phaseStart;
+    
+    // Transition from boot to ambient after 4.5s
+    if(phase === 'boot' && elapsed > 4500){
+      phase = 'ambient';
+    }
+    
+    // Fade effect
+    if(phase === 'boot'){
+      ctx.fillStyle = `rgba(5,6,10,${0.12 - elapsed/50000})`;
+      canvas.style.opacity = '0.6';
+    } else {
+      ctx.fillStyle = 'rgba(5,6,10,0.04)';
+      canvas.style.opacity = '0.07';
+    }
+    ctx.fillRect(0, 0, w, h);
+    
+    // Glow overlay during boot
+    if(phase === 'boot'){
+      const glowOpacity = Math.max(0, 0.15 - elapsed/30000);
+      glow.style.background = `radial-gradient(ellipse at center, rgba(0,240,255,${glowOpacity}) 0%, transparent 70%)`;
+    } else {
+      glow.style.background = 'none';
+    }
+    
+    for(let i = 0; i < cols; i++){
+      const d = drops[i];
+      
+      // Update chars periodically
+      if(Math.random() > 0.9){
+        d.chars.pop();
+        d.chars.unshift(randChar());
+      }
+      
+      // Draw trail
+      for(let j = 0; j < d.trail; j++){
+        const y = (d.y - j) * fontSize;
+        if(y < 0 || y > h) continue;
+        
+        const isHead = j === 0;
+        const alpha = isHead ? 1 : (1 - j/d.trail) * (phase === 'boot' ? 0.8 : 0.4);
+        
+        ctx.font = `${fontSize}px monospace`;
+        ctx.fillStyle = getColor(d.hue, isHead);
+        ctx.globalAlpha = alpha;
+        
+        if(isHead && phase === 'boot'){
+          ctx.shadowColor = getColor(d.hue, false);
+          ctx.shadowBlur = 15;
+        } else {
+          ctx.shadowBlur = 0;
+        }
+        
+        ctx.fillText(d.chars[j] || randChar(), i * fontSize, y);
+      }
+      
+      ctx.globalAlpha = 1;
+      ctx.shadowBlur = 0;
+      
+      // Move drop
+      d.y += d.speed * (phase === 'boot' ? 1.5 : 1);
+      
+      // Reset
+      if(d.y * fontSize > h + d.trail * fontSize){
+        d.y = Math.random() * -50;
+        d.speed = 1 + Math.random() * 3;
+        d.trail = 8 + Math.floor(Math.random() * 16);
+        d.hue = Math.random() > 0.7 ? 'cyan' : (Math.random() > 0.5 ? 'magenta' : 'green');
+        d.chars = Array(d.trail).fill(0).map(() => randChar());
+      }
+    }
+    
     requestAnimationFrame(draw);
   }
+  
   draw();
+  
+  // Expose function to re-trigger boot phase
+  window.rebootMatrix = function(){
+    phase = 'boot';
+    phaseStart = Date.now();
+    init();
+  };
 })();
 
-// ── BOOT SEQUENCE ──
+// ── BOOT SEQUENCE — CINEMATIC CYBERPUNK ──
 (function(){
   const terminal = document.getElementById('bootTerminal');
+  const bootSequence = document.getElementById('bootSequence');
+  let currentLine = 0;
+  
   const bootLines = [
-    'INIZIALIZZAZIONE SISTEMA...',
-    'Caricamento moduli: OK',
-    'Verifica identita: RONALDO RISKA [CONFIRMED]',
-    'Competenze rilevate: FRONTEND | BACKEND | AI | CONTENT',
-    'Stack attivo: HTML5 CSS3 JS REACT NESTJS PRISMA',
-    'Protocollo cyberpunk: ATTIVO',
-    '',
-    '> ACCESSO CONSENTITO',
-    '> Caricamento interfaccia...'
+    { text: '██████████████████████████████████████████', delay: 0 },
+    { text: '██  NEXUS OS v4.2.1 — THAI CORP 2087   ██', delay: 50 },
+    { text: '██████████████████████████████████████████', delay: 50 },
+    { text: '', delay: 200 },
+    { text: '[BOOT] Inizializzazione nucleo...', delay: 100 },
+    { text: '[BOOT] Verifica integrità sistema... OK', delay: 150 },
+    { text: '[BOOT] Caricamento moduli neurali...', delay: 80 },
+    { text: '[BOOT] Connessione dati: ATTIVA', delay: 120 },
+    { text: '[BOOT] Protocollo cyberspace: ONLINE', delay: 100 },
+    { text: '', delay: 100 },
+    { text: '═══════════════════════════════════════════', delay: 50 },
+    { text: '  ACCESSO IDENTITÀ: RONALDO RISKA', delay: 200 },
+    { text: '  PROFIL0: Web Dev / Content / AI', delay: 80 },
+    { text: '═══════════════════════════════════════════', delay: 100 },
+    { text: '', delay: 150 },
+    { text: '[SCAN] Analisi competenze in corso...', delay: 120 },
+    { text: '[SCAN] ████████████ 100% COMPLETATO', delay: 300 },
+    { text: '', delay: 100 },
+    { text: '[✓] Frontend:     HTML5 / CSS3 / JS / REACT', delay: 60 },
+    { text: '[✓] Backend:      NESTJS / NODE / PRISMA', delay: 60 },
+    { text: '[✓] AI Engine:    PROMPT / CLAUDE / GPT', delay: 60 },
+    { text: '[✓] Content:      VIDEO / COPY / SEO', delay: 60 },
+    { text: '[✓] CAD:          TESSITURA / DASHBOARD', delay: 60 },
+    { text: '', delay: 150 },
+    { text: '[AUTH] Decrittografia contenuto...', delay: 200 },
+    { text: '[AUTH] Accesso autorizzato.', delay: 150 },
+    { text: '', delay: 100 },
+    { text: '> CARICAMENTO INTERFACCIA GRAFICA...', delay: 400 },
+    { text: '> SISTEMA ONLINE — BENVENUTO', delay: 200 },
+    { text: '', delay: 300 }
   ];
-  let i = 0;
+  
   function addLine(){
-    if(i >= bootLines.length){
+    if(currentLine >= bootLines.length){
+      // Trigger data burst and power flash
+      triggerDataBurst();
+      document.getElementById('powerFlash').classList.add('active');
       setTimeout(() => {
-        document.getElementById('bootSequence').classList.add('hidden');
+        bootSequence.style.opacity = '0';
+        bootSequence.style.visibility = 'hidden';
+        bootSequence.style.pointerEvents = 'none';
         document.getElementById('navHud').classList.add('visible');
-      }, 800);
+        // Trigger reveal on first section
+        const hero = document.querySelector('#hero');
+        if(hero) hero.classList.add('revealed');
+      }, 600);
       return;
     }
+    
+    const line = bootLines[currentLine];
     const div = document.createElement('div');
     div.className = 'boot-line';
-    div.textContent = bootLines[i];
+    div.textContent = line.text;
+    div.style.animationDelay = '0s';
     terminal.appendChild(div);
-    i++;
-    setTimeout(addLine, 180 + Math.random() * 120);
+    
+    // Auto scroll
+    terminal.scrollTop = terminal.scrollHeight;
+    
+    currentLine++;
+    setTimeout(addLine, line.delay + Math.random() * 60);
   }
-  addLine();
+  
+  // Start after a brief pause
+  setTimeout(addLine, 600);
 })();
 
 // ── SCROLL REVEAL ──
@@ -405,7 +552,8 @@
   about     - Chi sono
   contact   - Come contattarmi
   clear     - Pulisci terminale
-  matrix    - Attiva modalità matrix
+  matrix    - Attiva modalità matrix intensiva
+  reboot    - Riavvia il sistema (completo)
   echo      - Ripeti il testo`,
     skills: () => `COMPETENZE TECNICHE:
   ▸ Frontend: HTML5, CSS3, JavaScript ES6+, React, TypeScript
@@ -434,8 +582,26 @@
   ⚡ GitHub: github.com/ItalyCircularFashion
   🌐 Portfolio: italycircularfashion.github.io/RonaldoRiska/
   📄 CV: italycircularfashion.github.io/RonaldoRiskaCV/`,
+    reboot: () => {
+      if(window.rebootMatrix) window.rebootMatrix();
+      const bootSeq = document.getElementById('bootSequence');
+      bootSeq.style.opacity = '1';
+      bootSeq.style.visibility = 'visible';
+      bootSeq.style.pointerEvents = 'auto';
+      document.getElementById('navHud').classList.remove('visible');
+      // Re-trigger boot sequence
+      setTimeout(() => {
+        document.getElementById('bootTerminal').innerHTML = '';
+        // Reinitialize boot
+        location.reload();
+      }, 2000);
+      return 'Risalto del sistema in corso...';
+    },
     clear: () => { setTimeout(() => { body.innerHTML = ''; }, 50); return ''; },
-    matrix: () => { document.getElementById('matrixRain').style.opacity = '0.15'; return 'Modalità matrix attivata. 🦋'; },
+    matrix: () => { 
+      if(window.rebootMatrix) window.rebootMatrix();
+      return 'Modalità matrix intensiva attivata. 🦋'; 
+    },
     echo: (args) => args.join(' ') || 'Inserisci testo dopo echo.'
   };
   function execute(cmd){
@@ -464,7 +630,57 @@
   });
 })();
 
-// ── SMOOTH SCROLL ──
+// ── DATA BURST EFFECT ──
+function triggerDataBurst(){
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;inset:0;z-index:9999;pointer-events:none;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  const cols = Math.floor(canvas.width / 14);
+  const drops = Array.from({length: cols}, () => ({
+    y: Math.random() * -canvas.height,
+    speed: 4 + Math.random() * 8,
+    chars: Array(20).fill(0).map(() => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%'[Math.floor(Math.random()*42)]),
+    hue: Math.random() > 0.5 ? '#00f0ff' : (Math.random() > 0.5 ? '#ff00aa' : '#39ff14')
+  }));
+  
+  let frame = 0;
+  const maxFrames = 60;
+  
+  function burstDraw(){
+    ctx.fillStyle = `rgba(5,6,10,${0.15 - frame/400})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    for(let i = 0; i < cols; i++){
+      const d = drops[i];
+      for(let j = 0; j < 20; j++){
+        const y = (d.y - j) * 14;
+        if(y < 0 || y > canvas.height) continue;
+        const alpha = (1 - j/20) * (1 - frame/maxFrames);
+        ctx.font = '14px monospace';
+        ctx.fillStyle = d.hue;
+        ctx.globalAlpha = alpha;
+        ctx.shadowColor = d.hue;
+        ctx.shadowBlur = 10;
+        ctx.fillText(d.chars[j], i * 14, y);
+      }
+      d.y += d.speed;
+      if(d.y * 14 > canvas.height + 280){
+        d.y = Math.random() * -100;
+        d.speed = 4 + Math.random() * 8;
+      }
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    frame++;
+    if(frame < maxFrames) requestAnimationFrame(burstDraw);
+    else canvas.remove();
+  }
+  burstDraw();
+}
 function scrollToSection(selector){
   const el = document.querySelector(selector);
   if(el) el.scrollIntoView({ behavior: 'smooth' });
