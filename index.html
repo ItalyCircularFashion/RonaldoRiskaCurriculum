@@ -40,6 +40,20 @@
   <span class="boot-cursor"></span>
 </div>
 
+<!-- TYPEWRITER REVEAL -->
+<div id="typewriterReveal">
+  <div class="typewriter-sheet">
+    <div class="typewriter-content">
+      <div class="typewriter-name" id="twName"></div>
+      <div class="typewriter-role" id="twRole"></div>
+      <div class="typewriter-text" id="twText"></div>
+      <span class="typewriter-cursor" id="twCursor"></span>
+    </div>
+    <div class="typewriter-skip" onclick="skipTypewriter()">Premi per saltare →</div>
+  </div>
+  <div class="bell-indicator" id="bellIndicator">♪ DING ♪</div>
+</div>
+
 <!-- NAVIGATION HUD -->
 <nav id="navHud">
   <div class="nav-logo">RR<span>_</span>DEV</div>
@@ -465,10 +479,11 @@
         bootSequence.style.opacity = '0';
         bootSequence.style.visibility = 'hidden';
         bootSequence.style.pointerEvents = 'none';
-        document.getElementById('navHud').classList.add('visible');
-        // Trigger reveal on first section
-        const hero = document.querySelector('#hero');
-        if(hero) hero.classList.add('revealed');
+        // Show typewriter reveal after boot
+        setTimeout(() => {
+          document.getElementById('typewriterReveal').classList.add('active');
+          startTypewriter();
+        }, 400);
       }, 600);
       return;
     }
@@ -629,6 +644,142 @@
     }
   });
 })();
+
+// ── TYPEWRITER REVEAL ──
+function startTypewriter(){
+  const name = 'RONALDO RISKA';
+  const role = 'Web Developer · Content Creator · Digitale Tessile';
+  const text = `Sono uno sviluppatore web e content creator con una passione: trasformare idee complesse in esperienze digitali memorabili.
+
+Dalla filiera tessile al codice, ho costruito applicazioni che risolvono problemi reali — ERP, CAD, dashboard KPI, piattaforme editoriali.
+
+Ogni progetto che tocco diventa un pezzo unico: zero template, zero compromessi. Solo codice pulito, design funzionale e un tocco cyberpunk che lascia il segno.
+
+Se cerchi qualcuno che sa costruire, comunicare e innovare — hai trovato la persona giusta.`;
+
+  const nameEl = document.getElementById('twName');
+  const roleEl = document.getElementById('twRole');
+  const textEl = document.getElementById('twText');
+  const cursor = document.getElementById('twCursor');
+  const sheet = document.querySelector('.typewriter-sheet');
+
+  let nameIdx = 0, roleIdx = 0, textIdx = 0;
+  let phase = 'name';
+  let bellCounter = 0;
+
+  function typeNext(){
+    if(phase === 'name'){
+      if(nameIdx < name.length){
+        nameEl.textContent += name[nameIdx];
+        nameIdx++;
+        cursor.classList.add('strike');
+        setTimeout(() => cursor.classList.remove('strike'), 50);
+        playTypeSound();
+        // Bell flash every 8 chars
+        bellCounter++;
+        if(bellCounter % 8 === 0) {
+          sheet.classList.add('bell');
+          setTimeout(() => sheet.classList.remove('bell'), 400);
+          playBellSound();
+          // Show bell indicator
+          const bellInd = document.getElementById('bellIndicator');
+          bellInd.classList.add('active');
+          setTimeout(() => bellInd.classList.remove('active'), 600);
+        }
+        setTimeout(typeNext, 80 + Math.random() * 40);
+      } else {
+        phase = 'role';
+        setTimeout(typeNext, 300);
+      }
+    } else if(phase === 'role'){
+      if(roleIdx < role.length){
+        roleEl.textContent += role[roleIdx];
+        roleIdx++;
+        cursor.classList.add('strike');
+        setTimeout(() => cursor.classList.remove('strike'), 50);
+        playTypeSound();
+        setTimeout(typeNext, 50 + Math.random() * 30);
+      } else {
+        phase = 'text';
+        setTimeout(typeNext, 400);
+      }
+    } else if(phase === 'text'){
+      if(textIdx < text.length){
+        textEl.textContent += text[textIdx];
+        textIdx++;
+        cursor.classList.add('strike');
+        setTimeout(() => cursor.classList.remove('strike'), 50);
+        playTypeSound();
+        // Variable speed — slower for punctuation
+        const ch = text[textIdx - 1];
+        const delay = (ch === '.' || ch === ',' || ch === '—') ? 150 : (ch === '\n' ? 200 : 30 + Math.random() * 30);
+        // Auto-scroll paper
+        sheet.scrollTop = sheet.scrollHeight;
+        setTimeout(typeNext, delay);
+      } else {
+        // Done typing — show cursor steady, then transition
+        setTimeout(() => {
+          document.getElementById('typewriterReveal').classList.add('hidden');
+          document.getElementById('navHud').classList.add('visible');
+          const hero = document.querySelector('#hero');
+          if(hero) hero.classList.add('revealed');
+        }, 2500);
+      }
+    }
+  }
+
+  typeNext();
+}
+
+function skipTypewriter(){
+  const nameEl = document.getElementById('twName');
+  const roleEl = document.getElementById('twRole');
+  const textEl = document.getElementById('twText');
+  nameEl.textContent = 'RONALDO RISKA';
+  roleEl.textContent = 'Web Developer · Content Creator · Digitale Tessile';
+  textEl.textContent = `Sono uno sviluppatore web e content creator con una passione: trasformare idee complesse in esperienze digitali memorabili.
+
+Dalla filiera tessile al codice, ho costruito applicazioni che risolvono problemi reali — ERP, CAD, dashboard KPI, piattaforme editoriali.
+
+Ogni progetto che tocco diventa un pezzo unico: zero template, zero compromessi. Solo codice pulito, design funzionale e un tocco cyberpunk che lascia il segno.
+
+Se cerchi qualcuno che sa costruire, comunicare e innovare — hai trovato la persona giusta.`;
+  setTimeout(() => {
+    document.getElementById('typewriterReveal').classList.add('hidden');
+    document.getElementById('navHud').classList.add('visible');
+    const hero = document.querySelector('#hero');
+    if(hero) hero.classList.add('revealed');
+  }, 500);
+}
+
+// ── TYPEWRITER SOUND (Web Audio API) ──
+let audioCtx = null;
+function playTypeSound(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.frequency.value = 800 + Math.random() * 400;
+  osc.type = 'square';
+  gain.gain.value = 0.02;
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.05);
+}
+function playBellSound(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.frequency.value = 2400;
+  osc.type = 'sine';
+  gain.gain.value = 0.05;
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.3);
+}
 
 // ── DATA BURST EFFECT ──
 function triggerDataBurst(){

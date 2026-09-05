@@ -4,7 +4,7 @@
 ══════════════════════════════════════════════════════════ */
 
 /* ─── FONTS ─── */
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* ─── TOKENS ─── */
 :root {
@@ -184,7 +184,177 @@ img { max-width: 100%; display: block; }
   text-shadow: var(--glow-cyan);
 }
 
-/* ─── HERO SECTION ─── */
+/* ─── TYPEWRITER REVEAL ─── */
+#typewriterReveal {
+  position: fixed; inset: 0; z-index: 9998;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.8s, visibility 0.8s;
+  overflow: hidden;
+}
+#typewriterReveal.active { opacity: 1; visibility: visible; }
+#typewriterReveal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.typewriter-sheet {
+  background: #f5f0e6;
+  width: 90%; max-width: 700px;
+  min-height: 400px;
+  padding: 4rem 3rem;
+  position: relative;
+  box-shadow: 
+    0 0 0 1px rgba(0,0,0,0.1),
+    0 20px 60px rgba(0,0,0,0.5),
+    inset 0 0 100px rgba(0,0,0,0.03);
+  transform: rotate(-0.5deg);
+  background-image: 
+    repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      rgba(0,0,0,0.03) 27px,
+      rgba(0,0,0,0.03) 28px
+    );
+  animation: sheetSlideIn 0.8s cubic-bezier(0.2,0.8,0.2,1) forwards;
+  max-height: 80vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+@keyframes sheetSlideIn {
+  from { opacity: 0; transform: rotate(-2deg) translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: rotate(-0.5deg) translateY(0) scale(1); }
+}
+
+/* Typewriter platen roller at top */
+.typewriter-sheet::before {
+  content: '';
+  position: absolute;
+  top: 2rem; left: 2rem; right: 2rem;
+  height: 8px;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 2;
+}
+
+/* Paper clip decoration */
+.typewriter-sheet::after {
+  content: '';
+  position: absolute;
+  top: -1rem; right: 3rem;
+  width: 20px; height: 50px;
+  border: 2px solid #888;
+  border-radius: 0 0 10px 10px;
+  border-top: none;
+  opacity: 0.4;
+  z-index: 2;
+}
+
+/* Red margin line */
+.typewriter-content::before {
+  content: '';
+  position: absolute;
+  left: 3rem; top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(255,0,0,0.15);
+}
+
+.typewriter-content {
+  font-family: 'Special Elite', 'Courier Prime', Courier, monospace;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #1a1a1a;
+  min-height: 200px;
+  padding-top: 2rem;
+  position: relative;
+}
+.typewriter-name {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+  color: #0a0a0a;
+}
+.typewriter-role {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+.typewriter-text {
+  font-size: 0.95rem;
+  color: #2a2a2a;
+  white-space: pre-wrap;
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 10px; height: 1.2em;
+  background: #1a1a1a;
+  animation: typeBlink 0.7s infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  transition: transform 0.05s;
+}
+.typewriter-cursor.strike {
+  transform: translateY(1px) scaleY(0.9);
+}
+@keyframes typeBlink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+.typewriter-skip {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 9999;
+  animation: skipPulse 2s ease-in-out infinite;
+}
+.typewriter-skip:hover { opacity: 1; animation: none; }
+@keyframes skipPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* Bell indicator */
+.bell-indicator {
+  position: fixed;
+  top: 2rem; right: 2rem;
+  font-family: 'Special Elite', monospace;
+  font-size: 0.8rem;
+  color: #b8860b;
+  opacity: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+.bell-indicator.active {
+  animation: bellText 0.6s ease-out;
+}
+@keyframes bellText {
+  0% { opacity: 0; transform: translateY(10px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-5px); }
+}
+
+/* Paper grain texture */
+.typewriter-sheet > .typewriter-content::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Typewriter bell flash */
+@keyframes bellFlash {
+  0% { box-shadow: 0 0 0 0 rgba(255,215,0,0.6); }
+  50% { box-shadow: 0 0 30px 10px rgba(255,215,0,0.3); }
+  100% { box-shadow: 0 0 0 0 rgba(255,215,0,0); }
+}
+.typewriter-sheet.bell {
+  animation: bellFlash 0.4s ease-out;
+}
 #hero {
   min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
