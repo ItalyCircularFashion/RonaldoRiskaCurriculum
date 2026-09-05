@@ -717,13 +717,16 @@ Se cerchi qualcuno che sa costruire, comunicare e innovare — hai trovato la pe
         sheet.scrollTop = sheet.scrollHeight;
         setTimeout(typeNext, delay);
       } else {
-        // Done typing — show cursor steady, then transition
+        // Done typing — show cursor steady, then transition to projects
         setTimeout(() => {
           document.getElementById('typewriterReveal').classList.add('hidden');
           document.getElementById('navHud').classList.add('visible');
-          const hero = document.querySelector('#hero');
-          if(hero) hero.classList.add('revealed');
-        }, 2500);
+          // Reveal all sections for scroll
+          document.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
+          // Smooth scroll to projects
+          const projects = document.querySelector('#projects');
+          if(projects) projects.scrollIntoView({ behavior: 'smooth' });
+        }, 1500);
       }
     }
   }
@@ -747,8 +750,11 @@ Se cerchi qualcuno che sa costruire, comunicare e innovare — hai trovato la pe
   setTimeout(() => {
     document.getElementById('typewriterReveal').classList.add('hidden');
     document.getElementById('navHud').classList.add('visible');
-    const hero = document.querySelector('#hero');
-    if(hero) hero.classList.add('revealed');
+    // Reveal all sections for scroll
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
+    // Smooth scroll to projects
+    const projects = document.querySelector('#projects');
+    if(projects) projects.scrollIntoView({ behavior: 'smooth' });
   }, 500);
 }
 
