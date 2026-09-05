@@ -1,637 +1,475 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ronaldo Riska — Textile Intelligence Platform</title>
-<meta name="description" content="Professional textile intelligence platform: textile operations, supply chain, digital systems, AI applied to fashion.">
+<title>RONALDO RISKA — Web Developer & Content Creator</title>
+<meta name="description" content="Cyberpunk showcase di Ronaldo Riska: web developer, content creator, e specialista digitale tessile.">
+<meta name="theme-color" content="#05060a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Ronaldo Riska",
+    "jobTitle": "Web Developer & Content Creator",
+    "url": "https://italycircularfashion.github.io/RonaldoRiskaCurriculum/"
+  }
+}
+</script>
 </head>
 <body>
-<div id="cursorGlow"></div>
-<div id="scrollProgress"></div>
 
-<div class="folio" id="folio">
-  <div class="folio-inner">
-    <span class="folio-mark">I</span>
-    <div class="folio-line"></div>
-    <span class="folio-label" data-for="hero">Forum</span>
-    <span class="folio-label" data-for="featured">Featured</span>
-    <span class="folio-label" data-for="agenda">Agenda</span>
-    <span class="folio-label" data-for="market">Market</span>
-    <span class="folio-label" data-for="news">News</span>
-    <span class="folio-label" data-for="discussions">Discuss</span>
-    <span class="folio-label" data-for="questions">Questions</span>
-    <span class="folio-label" data-for="events">Events</span>
-    <div class="folio-line"></div>
-  </div>
+<!-- SCANLINES OVERLAY -->
+<div class="scanlines"></div>
+
+<!-- MATRIX RAIN -->
+<canvas id="matrixRain"></canvas>
+
+<!-- BOOT SEQUENCE -->
+<div id="bootSequence">
+  <div class="boot-terminal" id="bootTerminal"></div>
+  <span class="boot-cursor"></span>
 </div>
 
-<header id="siteHeader">
-  <div class="logo">
-    <span class="l1">Forum della Moda</span>
-    <span class="l2">FASHION · INTELLIGENCE · COMMUNITY</span>
+<!-- NAVIGATION HUD -->
+<nav id="navHud">
+  <div class="nav-logo">RR<span>_</span>DEV</div>
+  <div class="nav-links">
+    <a href="#hero" class="active">Home</a>
+    <a href="#skills">Skills</a>
+    <a href="#terminal">Terminal</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
   </div>
-  <nav class="primary">
-    <a href="#news">News</a>
-    <a href="#market">Market</a>
-    <a href="#discussions">Discussions</a>
-    <a href="#questions">Questions</a>
-    <a href="#events">Events</a>
-    <a href="#footer">Community</a>
-  </nav>
-  <div class="nav-cta">
-    <a href="#" class="btn btn-primary">Join the Community</a>
-    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
-</header>
+</nav>
 
-<aside class="market-ticker left" id="tickerLeft">
-  <div class="ticker-head"><span class="ticker-dot"></span><span class="ticker-label">Natural Fibres</span></div>
-</aside>
-<aside class="market-ticker right" id="tickerRight">
-  <div class="ticker-head"><span class="ticker-dot"></span><span class="ticker-label">Energy &amp; FX</span></div>
-</aside>
-
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <div class="eyebrow hero-eyebrow">Vol. I — Issue 001 · Prato &amp; Beyond</div>
-      <h1>
-        <span class="hero-line"><span>Where Fashion Meets</span></span>
-        <span class="hero-line"><span><em>Collective Intelligence</em></span></span>
-      </h1>
-      <p class="hero-sub">The definitive destination for fashion journalism, industry discussions and sustainable innovation.</p>
-      <div class="hero-actions">
-        <a href="#news" class="btn btn-primary">Read Today's News</a>
-        <a href="#footer" class="btn btn-ghost">Join the Community</a>
-        <a href="#discussions" class="hero-explore">Explore Discussions →</a>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-img-main">
-        <img src="assets/images/hero-main.png" alt="Professional fashion photography in natural daylight" id="heroImgMain">
-      </div>
-      <div class="hero-img-accent">
-        <img src="assets/images/hero-accent.png" alt="Detail of natural fabric texture">
-      </div>
-      <span class="hero-credit">Studio light, Milan — Spring 26</span>
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-tag">[ SYSTEM ONLINE — IDENTITY VERIFIED ]</div>
+    <h1 class="hero-title">
+      <span class="glitch">RONALDO RISKA</span>
+    </h1>
+    <p class="hero-sub">
+      Web Developer · Content Creator · Digitale Tessile<br>
+      Costruisco esperienze digitali su misura. Zero template. Zero compromessi.
+    </p>
+    <div class="hero-cta">
+      <button class="btn-cyber" onclick="scrollToSection('#skills')">→ Esplora Skills</button>
+      <button class="btn-cyber magenta" onclick="scrollToSection('#terminal')">→ Apri Terminal</button>
     </div>
   </div>
-  <div class="scroll-cue"><span class="line"></span> Scroll</div>
 </section>
 
-<!-- FEATURED STORY -->
-<section id="featured">
-  <div class="wrap">
-    <div class="eyebrow reveal" style="margin-bottom:36px;">Featured Story</div>
-    <div class="featured reveal">
-      <div class="featured-media">
-        <span class="featured-tag">Sustainability</span>
-        <img src="assets/images/featured-mill.png" alt="Inside a Prato textile mill" loading="lazy">
+<!-- ═══════════ STATS ═══════════ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="stats-row">
+      <div class="stat-item reveal">
+        <div class="stat-num" data-target="15">0</div>
+        <div class="stat-label">Progetti Completati</div>
       </div>
-      <div class="featured-body">
-        <h3>Inside Prato's Quiet Race to Rebuild Wool, Thread by Thread</h3>
-        <p>How a district built on regenerated fibre is rewriting its own playbook — and what its terzisti network can teach the rest of the industry about resilience without losing craft.</p>
-        <div class="featured-meta">
-          <img class="avatar" src="assets/images/avatar-executive.png" alt="Elena Marchetti">
-          <span>Elena Marchetti</span><span class="dot"></span>
-          <span>Senior Editor, Materials</span><span class="dot"></span>
-          <span>9 min read</span>
-        </div>
-        <div class="progress"></div>
-        <div class="featured-actions">
-          <span>💬 142 Comments</span>
-          <span>🔖 Save</span>
-          <span>↗ Share</span>
-        </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-target="5">0</div>
+        <div class="stat-label">Anni di Esperienza</div>
       </div>
-    </div>
-    <div class="continue-row reveal">
-      <div class="continue-cell">
-        <div class="k">Related Discussion</div>
-        <p class="lnk">"Is regenerated wool actually scaling, or just marketing?"</p>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-target="100">0</div>
+        <div class="stat-label">% Passione</div>
       </div>
-      <div class="continue-cell">
-        <div class="k">Expert Opinion</div>
-        <p class="lnk">A supply chain lead on traceability gaps in terzisti networks</p>
-      </div>
-      <div class="continue-cell">
-        <div class="k">Open Question</div>
-        <p class="lnk">"How do you audit a subcontractor for fibre origin?"</p>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-target="24">0</div>
+        <div class="stat-label">/7 Availability</div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="wrap"><div class="divider"></div></div>
-
-<!-- AGENDA -->
-<section id="agenda" class="tight">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div>
-        <div class="eyebrow" style="margin-bottom:18px;">Curated Daily</div>
-        <h2>Today's Fashion Agenda</h2>
-      </div>
-      <p class="desc">Editorial highlights selected by our team — across luxury, manufacturing, retail and the conversations shaping the day.</p>
+<!-- ═══════════ SKILLS ═══════════ -->
+<section class="section" id="skills">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">// COMPETENZE TECNICHE</div>
+      <h2 class="section-title">Stack & Strumenti</h2>
+      <p class="section-desc">Dallo sviluppo frontend alla creazione di contenuti digitali — un toolkit completo per portare idee nel mondo reale.</p>
     </div>
-    <div class="chips reveal">
-      <div class="chip active">All</div>
-      <div class="chip">Luxury</div>
-      <div class="chip">Streetwear</div>
-      <div class="chip">Runway</div>
-      <div class="chip">Textiles</div>
-      <div class="chip">Manufacturing</div>
-      <div class="chip">Business</div>
-      <div class="chip">AI</div>
-      <div class="chip">Circular Fashion</div>
-    </div>
-    <div class="rail reveal" id="agendaRail"></div>
-  </div>
-</section>
-
-<div class="wrap"><div class="divider"></div></div>
-
-<!-- MARKET INTELLIGENCE -->
-<section id="market">
-  <div class="wrap">
-    <div class="market-head reveal">
-      <div class="eyebrow" style="justify-content:center; margin:0 auto 18px;">Market Intelligence</div>
-      <h2>Live indicators that influence the global fashion industry.</h2>
-      <p class="market-summary" id="marketSummary">Today's textile markets show moderate stability, with cotton recovering while energy costs remain elevated. These movements continue to influence sourcing strategies across Europe.</p>
-      <div class="market-meta">
-        <span id="marketUpdated">Updated moments ago</span><span class="dot"></span><span>Sample data — live feed coming soon</span>
-      </div>
-    </div>
-
-    <div class="market-quote reveal">
-      <span class="market-quote-mark">“</span>
-      <p class="market-quote-text">Energy and fibre costs remain the two variables every sourcing director in Prato is watching this quarter — together, they explain most of the margin pressure mills are reporting right now.</p>
-      <span class="market-quote-cite">Forum della Moda — Market Desk</span>
-    </div>
-
-    <div class="market-grid reveal" id="marketGrid"></div>
-
-    <!-- BENTO INSIGHTS -->
-    <div class="sec-head reveal section-glow" style="margin-top:64px;">
-      <div>
-        <div class="eyebrow" style="margin-bottom:18px;">Deep Dives</div>
-        <h2>Textile Insights Bento</h2>
-      </div>
-      <p class="desc">Interactive panels combining KPIs, research, sustainability signals and AI signals in one scannable dashboard.</p>
-    </div>
-    <div class="bento reveal" id="bentoGrid">
-      <div class="bento-item bento-4 glass tilt">
-        <div class="eyebrow" style="margin-bottom:14px;">Sustainability</div>
-        <div class="count-up" data-target="8744" data-suffix="" data-prefix="" data-decimals="0" style="font-size:2.2rem; font-weight:800; color:var(--gold);">0</div>
-        <p style="margin-top:.5rem; color:var(--sand);">GOTS certified companies worldwide. Italy ranks #4 by count.</p>
-      </div>
-      <div class="bento-item bento-4 glass tilt">
-        <div class="eyebrow" style="margin-bottom:14px;">AI Market</div>
-        <div class="count-up" data-target="4.4" data-suffix="B USD" data-prefix="$" data-decimals="1" style="font-size:2.2rem; font-weight:800; color:var(--pine);">0</div>
-        <p style="margin-top:.5rem; color:var(--sand);">AI Fashion market size, +28.3% YoY growth projected through 2028.</p>
-      </div>
-      <div class="bento-item bento-4 glass tilt">
-        <div class="eyebrow" style="margin-bottom:14px;">Prato District</div>
-        <div class="count-up" data-target="2.1" data-suffix="%" data-prefix="+" data-decimals="1" style="font-size:2.2rem; font-weight:800; color:var(--gold);">0</div>
-        <p style="margin-top:.5rem; color:var(--sand);">Export growth in Q1 2026, driven by Middle East and Asia Pacific.</p>
-      </div>
-      <div class="bento-item bento-6 glass-strong">
-        <div class="eyebrow" style="margin-bottom:14px;">Featured Research</div>
-        <h3 style="font-size:1.05rem; font-weight:800; letter-spacing:-.02em; line-height:1.3;">AI per il Controllo Qualità Tessile: Stato dell'Arte e ROI Industriale</h3>
-        <p style="margin-top:.5rem; color:var(--sand); font-size:.8rem; line-height:1.7;">Analisi sistematica di sistemi di computer vision e deep learning per ispezione difetti su 12 impianti industriali.</p>
-        <div style="margin-top:1rem; display:flex; gap:.5rem; flex-wrap:wrap;">
-          <span class="rc-tag">Computer Vision</span><span class="rc-tag">Deep Learning</span><span class="rc-tag">QC</span><span class="rc-tag">ROI</span>
+    <div class="skill-grid">
+      <div class="skill-card reveal">
+        <span class="card-icon">⚡</span>
+        <h3>Frontend Development</h3>
+        <p>HTML5, CSS3, JavaScript ES6+, React, TypeScript. Costruisco interfacce moderne, responsive e performanti con attenzione al dettaglio.</p>
+        <div class="card-tags">
+          <span>HTML</span><span>CSS</span><span>JS</span><span>React</span><span>TS</span>
         </div>
-        <div style="margin-top:1rem; font-family:var(--f-m); font-size:.58rem; color:var(--stone);">28 pages · 12 min read · May 2026</div>
       </div>
-      <div class="bento-item bento-6 glass">
-        <div class="eyebrow" style="margin-bottom:14px;">Live Signal</div>
-        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
-          <div>
-            <div style="font-family:var(--f-m); font-size:.56rem; color:var(--stone); letter-spacing:.1em; text-transform:uppercase;">Cotton NY</div>
-            <div style="font-size:1.6rem; font-weight:800; color:var(--cream); margin-top:.2rem;">79.4¢/lb</div>
-            <div class="kpi-up" style="font-family:var(--f-m); font-size:.62rem; margin-top:.2rem;">▲ +1.8% MTD</div>
-          </div>
-          <canvas id="bentoSpark" width="180" height="64" style="flex:1; min-width:120px;"></canvas>
+      <div class="skill-card reveal">
+        <span class="card-icon">🔧</span>
+        <h3>Backend & Database</h3>
+        <p>NestJS, Node.js, Prisma ORM, PostgreSQL. Architetture modellari scalabili, API REST e gestione dati solida come una roccaforte.</p>
+        <div class="card-tags">
+          <span>NestJS</span><span>Node</span><span>Prisma</span><span>SQL</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="card-icon">🎨</span>
+        <h3>UI/UX Design</h3>
+        <p>Design system, prototipi interattivi, animazioni CSS/Canvas. Ogni pixel ha uno scopo — niente decorazione inutile.</p>
+        <div class="card-tags">
+          <span>Figma</span><span>Canvas</span><span>Animation</span><span>UX</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="card-icon">📹</span>
+        <h3>Content Creation</h3>
+        <p>Produzione video, copywriting, storytelling digitale. Trasformo tecnicità in narrazione — contenuti che convertono.</p>
+        <div class="card-tags">
+          <span>Video</span><span>Copy</span><span>Social</span><span>SEO</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="card-icon">🤖</span>
+        <h3>AI & Automazione</h3>
+        <p>Prompt engineering, workflow AI-assisted, automazione CLI. Uso l'intelligenza artificiale come moltiplicatore di produttività.</p>
+        <div class="card-tags">
+          <span>Prompt</span><span>Claude</span><span>GPT</span><span>Workflow</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="card-icon">🏭</span>
+        <h3>CAD & Simulazioni</h3>
+        <p>Applicazioni CAD web-based, simulatori tessili, dashboard KPI. Ponte tra industria tradizionale e innovazione digitale.</p>
+        <div class="card-tags">
+          <span>CAD</span><span>Dashboard</span><span>KPI</span><span>WebGL</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="wrap"><div class="divider"></div></div>
-
-<!-- NEWS -->
-<section id="news">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div>
-        <div class="eyebrow" style="margin-bottom:18px;">By the Editorial Desk</div>
-        <h2>Latest News</h2>
-      </div>
-      <p class="desc">Reported and written by Forum della Moda editors. Verified before publication, open for discussion after.</p>
+<!-- ═══════════ INTERACTIVE TERMINAL ═══════════ -->
+<section class="section" id="terminal">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">// TERMINALE INTERATTIVO</div>
+      <h2 class="section-title">Inserisci Comandi</h2>
+      <p class="section-desc">Prova il terminale. Digita 'help' per i comandi disponibili, o esplora le mie skill interattivamente.</p>
     </div>
-    <div class="news-grid reveal" id="newsGrid"></div>
+    <div class="terminal-window reveal">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <span class="terminal-title">riska-terminal v2.0</span>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div class="output">Benvenuto nel terminale interattivo di Ronaldo Riska.</div>
+        <div class="output">Digita <span class="highlight">help</span> per vedere i comandi disponibili.</div>
+        <div class="output">Prova: <span class="highlight">skills</span>, <span class="highlight">projects</span>, <span class="highlight">about</span>, <span class="highlight">contact</span></div>
+      </div>
+      <div class="terminal-input">
+        <span class="prompt"></span>
+        <input type="text" id="terminalInput" placeholder="Inserisci un comando..." autocomplete="off">
+      </div>
+    </div>
   </div>
 </section>
 
-<div class="wrap"><div class="divider"></div></div>
-
-<!-- DISCUSSIONS -->
-<section id="discussions">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div>
-        <div class="eyebrow" style="margin-bottom:18px;">The Heart of the Platform</div>
-        <h2>Trending Discussions</h2>
-      </div>
-      <p class="desc">Organised for clarity, not chaos. Every thread is searchable, citable, and built to last.</p>
+<!-- ═══════════ PROJECTS ═══════════ -->
+<section class="section" id="projects">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">// PROGETTI RECENTI</div>
+      <h2 class="section-title">Cosa Ho Costruito</h2>
+      <p class="section-desc">Una selezione di progetti reali — dalla piattaforma ERP alle dashboard industriali. Ogni progetto risolva un problema concreto.</p>
     </div>
-    <div class="disc-list reveal" id="discList"></div>
+    <div class="project-grid">
+      <div class="project-card reveal">
+        <span class="project-num">01</span>
+        <div class="project-type">ERP Piattaforma</div>
+        <h3>ERP Textile 3.0</h3>
+        <p>Sistema ERP completo per la filiera tessile: gestione ordini, inventario, movimenti, lotti. NestJS + Prisma + PostgreSQL.</p>
+      </div>
+      <div class="project-card reveal">
+        <span class="project-num">02</span>
+        <div class="project-type">CAD Tessile</div>
+        <h3>TessituraCAD</h3>
+        <p>Applicazione CAD web-based per il disegno tessile. Modulo React+Vifram con simulazione armature e note colore.</p>
+      </div>
+      <div class="project-card reveal">
+        <span class="project-num">03</span>
+        <div class="project-type">Dashboard KPI</div>
+        <h3>Supply Chain Monitor</h3>
+        <p>Dashboard real-time per il monitoraggio KPI della supply chain tessile. Canvas API, grafici sparkline, aggiornamento live.</p>
+      </div>
+      <div class="project-card reveal">
+        <span class="project-num">04</span>
+        <div class="project-type">Piattaforma Community</div>
+        <h3>Forum della Moda</h3>
+        <p>Piattaforma editoriale per la community fashion: news, discussioni, mercato intelligence. Design responsivo e performante.</p>
+      </div>
+      <div class="project-card reveal">
+        <span class="project-num">05</span>
+        <div class="project-type">MRP Planner</div>
+        <h3>MRP iPhone Planner</h3>
+        <p>Applicazione per la pianificazione MRP su mobile. Gestione materiali, scadenze e allocazione risorse in tempo reale.</p>
+      </div>
+      <div class="project-card reveal">
+        <span class="project-num">06</span>
+        <div class="project-type">Business Tools</div>
+        <h3>Project Suite</h3>
+        <p>Suite di strumenti project management: kanban industriale, Gantt planning, resource allocation. Vanilla JS puro.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<div class="wrap"><div class="divider"></div></div>
-
-<!-- QUESTIONS -->
-<section id="questions">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div>
-        <div class="eyebrow" style="margin-bottom:18px;">Verified Expertise</div>
-        <h2>Questions from the Community</h2>
-      </div>
-      <p class="desc">Ask the people who actually run the production floor, the pattern table, and the supply chain.</p>
+<!-- ═══════════ CONTENT CREATOR ═══════════ -->
+<section class="section" id="content">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">// CONTENT CREATOR</div>
+      <h2 class="section-title">Oltre il Codice</h2>
+      <p class="section-desc">Il mio lavoro non si ferma allo sviluppo. Creo contenuti che istruiscono, ispirano e convertono — dalla produzione video al copywriting tecnico.</p>
     </div>
-    <div class="q-grid reveal" id="qGrid"></div>
+    <div class="skill-grid">
+      <div class="skill-card reveal">
+        <span class="card-icon">🎬</span>
+        <h3>Video Production</h3>
+        <p>Montaggio, color grading, motion graphics. Video tutorial, demo prodotto e contenuti social — dal concept alla pubblicazione.</p>
+        <div class="card-tags"><span>DaVinci</span><span>Premiere</span><span>AfterFX</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="card-icon">✍️</span>
+        <h3>Copywriting</h3>
+        <p>Testi che vendono. Landing page, campagne social, newsletter. Ogni parola è scelta per massimizzare conversione e chiarezza.</p>
+        <div class="card-tags"><span>SEO</span><span>Landing</span><span>Social</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="card-icon">📊</span>
+        <h3>Social Strategy</h3>
+        <p>Gestione presenza digitale, content calendar, community building. Strategia data-driven per crescita organica sostenibile.</p>
+        <div class="card-tags"><span>Strategy</span><span>Analytics</span><span>Growth</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<div class="wrap"><div class="divider"></div></div>
-
-<!-- EVENTS -->
-<section id="events" class="tight">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div>
-        <div class="eyebrow" style="margin-bottom:18px;">Plan Ahead</div>
-        <h2>Upcoming Events</h2>
-      </div>
-      <p class="desc">Fashion weeks, trade shows and webinars — follow them and join the conversation before, during and after.</p>
+<!-- ═══════════ CONTACT ═══════════ -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">// CONTATTI</div>
+      <h2 class="section-title">Connettiamoci</h2>
+      <p class="section-desc">Se hai un progetto in mente, un'idea da sviluppare, o semplicemente vuoi scambiare due chiamiamo il canale è aperto.</p>
     </div>
-    <div class="rail reveal" id="eventsRail"></div>
+    <div class="contact-links reveal">
+      <a href="mailto:ronaldo.riska@gmail.com" class="contact-link">📧 Email</a>
+      <a href="https://github.com/ItalyCircularFashion" target="_blank" rel="noopener" class="contact-link">⚡ GitHub</a>
+      <a href="https://italycircularfashion.github.io/RonaldoRiska/" target="_blank" rel="noopener" class="contact-link">🌐 Portfolio</a>
+      <a href="https://italycircularfashion.github.io/RonaldoRiskaCV/" target="_blank" rel="noopener" class="contact-link">📄 CV Online</a>
+    </div>
   </div>
 </section>
 
-<div class="wrap"><div class="divider"></div></div>
-
-<!-- EDITOR'S PICKS -->
-<section class="tight">
-  <div class="wrap">
-    <div class="eyebrow reveal" style="margin-bottom:34px;">Editor's Picks</div>
-    <div class="picks-strip reveal" id="picksStrip"></div>
-  </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section class="newsletter">
-  <div class="wrap reveal">
-    <div class="eyebrow" style="justify-content:center; color:rgba(255,255,255,.6);"><span style="color:rgba(255,255,255,.6)">Weekly Digest</span></div>
-    <h2 style="margin-top:22px;">Join 42,000 fashion professionals who read before everyone else.</h2>
-    <p>Trending discussions, the best expert answers, and what's worth your attention this week — every Friday.</p>
-    <form class="nl-form" onsubmit="return false;">
-      <input type="email" placeholder="your@email.com" required>
-      <button type="submit">Subscribe →</button>
-    </form>
-    <div class="nl-note">No spam. Unsubscribe anytime.</div>
-  </div>
-</section>
-
-<footer id="footer">
-  <div class="wrap">
-    <div class="foot-top">
-      <div class="foot-brand">
-        <span class="l1" style="font-family:var(--serif);">Forum della Moda</span>
-        <p>Where fashion meets collective intelligence. Journalism and community, reinforcing one another.</p>
-      </div>
-      <div class="foot-col">
-        <h6>Read</h6>
-        <a href="#news">News</a>
-        <a href="#featured">Featured Stories</a>
-        <a href="#agenda">Daily Agenda</a>
-        <a href="#">Newsletter</a>
-      </div>
-      <div class="foot-col">
-        <h6>Discuss</h6>
-        <a href="#discussions">Discussions</a>
-        <a href="#questions">Questions</a>
-        <a href="#">Experts</a>
-        <a href="#">Guidelines</a>
-      </div>
-      <div class="foot-col">
-        <h6>Explore</h6>
-        <a href="#events">Events</a>
-        <a href="#">Designers</a>
-        <a href="#">Materials</a>
-        <a href="#">Brands</a>
-      </div>
-      <div class="foot-col">
-        <h6>Company</h6>
-        <a href="#">About</a>
-        <a href="#">Careers</a>
-        <a href="#">Press</a>
-        <a href="#">Contact</a>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span>© 2026 Forum della Moda. All rights reserved.</span>
-      <span>Privacy · Terms · Editorial Standards</span>
-    </div>
-  </div>
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <p>© 2026 RONALDO RISKA — Tutti i diritti riservati</p>
+  <p style="margin-top:0.5rem;">Costruito con 💻 e ⚡ — Zero template. Zero compromessi.</p>
 </footer>
 
-<script src="js/interactions.js" defer></script>
+<!-- ═══════════ SCRIPTS ═══════════ -->
 <script>
-  // ---- Bento sparkline (lightweight inline render for live signal panel) ----
-  (function(){
-    const canvas = document.getElementById('bentoSpark');
-    if(!canvas || typeof SERIES==='undefined') return;
-    const series = SERIES.cotton || [76,77,78,77,78,79,79,79,79,79,79,79.4];
-    const color = '#D4A843';
-    const dpr = window.devicePixelRatio || 1;
-    const w = canvas.offsetWidth || 180;
-    const h = 64;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    const ctx = canvas.getContext('2d');
-    ctx.scale(dpr, dpr);
-    const min = Math.min(...series), max = Math.max(...series), range = max - min || 1;
-    const px = i => 4 + (i/(series.length-1)) * (w - 8);
-    const py = v => 6 + (h - 12) - (((v - min)/range) * (h - 12));
-    const grad = ctx.createLinearGradient(0, 6, 0, h - 6);
-    grad.addColorStop(0, color + '44');
-    grad.addColorStop(1, color + '00');
-    ctx.beginPath(); ctx.moveTo(px(0), py(series[0]));
-    for(let i=1;i<series.length;i++){
-      const cpx = (px(i-1) + px(i)) / 2;
-      ctx.bezierCurveTo(cpx, py(series[i-1]), cpx, py(series[i]), px(i), py(series[i]));
+// ── MATRIX RAIN ──
+(function(){
+  const canvas = document.getElementById('matrixRain');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  const cols = Math.floor(w / 20);
+  const drops = Array(cols).fill(1);
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+  function draw(){
+    ctx.fillStyle = 'rgba(5,6,10,0.05)';
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = '#00f0ff';
+    ctx.font = '14px monospace';
+    for(let i = 0; i < drops.length; i++){
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * 20, drops[i] * 20);
+      if(drops[i] * 20 > h && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
     }
-    ctx.lineTo(px(series.length-1), h - 6); ctx.lineTo(px(0), h - 6); ctx.closePath();
-    ctx.fillStyle = grad; ctx.fill();
-    ctx.beginPath(); ctx.moveTo(px(0), py(series[0]));
-    for(let i=1;i<series.length;i++){
-      const cpx = (px(i-1) + px(i)) / 2;
-      ctx.bezierCurveTo(cpx, py(series[i-1]), cpx, py(series[i]), px(i), py(series[i]));
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── BOOT SEQUENCE ──
+(function(){
+  const terminal = document.getElementById('bootTerminal');
+  const bootLines = [
+    'INIZIALIZZAZIONE SISTEMA...',
+    'Caricamento moduli: OK',
+    'Verifica identita: RONALDO RISKA [CONFIRMED]',
+    'Competenze rilevate: FRONTEND | BACKEND | AI | CONTENT',
+    'Stack attivo: HTML5 CSS3 JS REACT NESTJS PRISMA',
+    'Protocollo cyberpunk: ATTIVO',
+    '',
+    '> ACCESSO CONSENTITO',
+    '> Caricamento interfaccia...'
+  ];
+  let i = 0;
+  function addLine(){
+    if(i >= bootLines.length){
+      setTimeout(() => {
+        document.getElementById('bootSequence').classList.add('hidden');
+        document.getElementById('navHud').classList.add('visible');
+      }, 800);
+      return;
     }
-    ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.stroke();
-    const last = series[series.length-1];
-    ctx.beginPath(); ctx.arc(px(series.length-1), py(last), 3.5, 0, Math.PI*2); ctx.fillStyle = color; ctx.fill();
-  })();
-</script>
-<script>
-  // ---- Data ----
-  const agenda = [
-    ["Manufacturing","Inside the Last Mile of Italian Knitwear","Marco Bianchi","6 min"],
-    ["AI","Can a Model Learn to Spot a Bad Hem?","Sofia Rossi","5 min"],
-    ["Circular Fashion","The Economics of Recycled Cashmere","Giulia Ferrari","8 min"],
-    ["Retail","Why Flagship Stores Are Shrinking","Tommaso Greco","4 min"],
-    ["Streetwear","Tokyo's Archive Market, Explained","Yuki Tanaka","7 min"],
-    ["Business","Margins in the Age of Tariffs","Laura Conti","6 min"],
-  ];
-  const news = [
-    {lead:true, cat:"Luxury", title:"The Quiet Power Shift Inside LVMH's Atelier Network", author:"Isabella Romano", time:"12 min", date:"Jun 26", seed:"atelier1"},
-    {cat:"Innovation", title:"Bio-Based Dyes Are Finally Ready for Mass Production", author:"Davide Russo", time:"6 min", date:"Jun 26", seed:"dyevat2"},
-    {cat:"Business", title:"What Retailers Got Wrong About Gen Z Spending", author:"Chiara Bruno", time:"5 min", date:"Jun 25", seed:"retail3"},
-    {cat:"Runway", title:"Five Silhouettes That Defined This Season", author:"Anna Moretti", time:"4 min", date:"Jun 25", seed:"runway4"},
-    {cat:"Materials", title:"Inside the Lab Growing Leather From Mycelium", author:"Paolo Ricci", time:"7 min", date:"Jun 24", seed:"mycel5"},
-  ];
-  const discussions = [
-    ["Manufacturing","Best ERP for managing 6 subcontractor sites at once?","217","48", ["a1","a2","a3"]],
-    ["Sustainability","Is 'deadstock' fabric actually solving anything?","189","63", ["a4","a5","a6"]],
-    ["AI","Which AI tools are textile mills actually using in 2026?","301","91", ["a7","a8","a9"]],
-    ["Fashion Business","How are you pricing in tariff volatility right now?","156","37", ["a10","a11"]],
-    ["Pattern Making","Grading for petite sizing — sharing my block adjustments","98","22", ["a12","a13","a14"]],
-  ];
-  const questions = [
-    {tags:["Textile Engineering","Quality Control"], q:"How do you set acceptable defect tolerance for jacquard weaving?", expert:"Renzo Galli", role:"Textile Engineer, 22 yrs", seed:"exp1", accepted:true},
-    {tags:["Supply Chain","Fashion Law"], q:"What actually changes in contracts once a supplier is GOTS certified?", expert:"Marta Sani", role:"Compliance Lead", seed:"exp2", accepted:true},
-    {tags:["Pattern Making"], q:"Best approach for grading a fitted blazer across 8 sizes?", expert:"Luca De Luca", role:"Pattern Maker", seed:"exp3", accepted:false},
-    {tags:["Manufacturing","Materials"], q:"Ring-spun vs open-end yarn — when does the cost difference matter?", expert:"Federica Costa", role:"Production Planner", seed:"exp4", accepted:true},
-  ];
-  const events = [
-    ["27","JUN","Trade Show","Pitti Filati — Florence"],
-    ["03","JUL","Webinar","Traceability in the Wool Supply Chain"],
-    ["14","JUL","Fashion Week","Milano Moda Donna Previews"],
-    ["29","JUL","Meetup","Forum della Moda — Prato Community Night"],
-  ];
-  const picks = [
-    ["Editor's Pick","The Last Artisanal Dye House in Prato", "pick1"],
-    ["Editor's Pick","Why Slow Fashion Needs Fast Logistics", "pick2"],
-    ["Editor's Pick","A Pattern Maker's Notebook, Annotated", "pick3"],
-    ["Editor's Pick","The Spreadsheet That Runs a Mill", "pick4"],
-  ];
-
-  const el = (h) => { const t=document.createElement('template'); t.innerHTML=h.trim(); return t.content.firstChild; };
-
-  // ---- Market Intelligence (mock data — modular shape, ready for a live feed) ----
-  // Swap `commodities` for a fetch() to Trading Economics / ICE Futures / Yahoo Finance / internal ERP KPIs.
-  // Each card only needs: { symbol, name, unit, value, changeDaily, changeWeekly, changeMonthly, series, updatedAt }
-  function genSeries(seed, points=14){
-    let s = seed; const rnd = () => { s = (s*9301+49297)%233280; return s/233280; };
-    let v = 50; const out=[];
-    for(let i=0;i<points;i++){ v += (rnd()-0.5)*6; out.push(v); }
-    return out;
+    const div = document.createElement('div');
+    div.className = 'boot-line';
+    div.textContent = bootLines[i];
+    terminal.appendChild(div);
+    i++;
+    setTimeout(addLine, 180 + Math.random() * 120);
   }
-  const commodities = [
-    {name:"Cotton", unit:"USD / lb", value:0.82, changeDaily:0.6, changeWeekly:1.4, changeMonthly:-2.1, seed:11},
-    {name:"Wool", unit:"AUD / kg (clean)", value:14.35, changeDaily:-0.3, changeWeekly:0.8, changeMonthly:3.2, seed:22},
-    {name:"Silk", unit:"USD / kg", value:48.20, changeDaily:0.1, changeWeekly:-0.6, changeMonthly:1.1, seed:33},
-    {name:"Polyester", unit:"USD / ton", value:1120, changeDaily:-0.8, changeWeekly:-1.2, changeMonthly:-0.4, seed:44},
-    {name:"Viscose", unit:"USD / ton", value:980, changeDaily:0.4, changeWeekly:0.9, changeMonthly:2.0, seed:55},
-    {name:"Linen", unit:"EUR / kg", value:6.10, changeDaily:0.2, changeWeekly:0.3, changeMonthly:0.7, seed:66},
-    {name:"Cashmere", unit:"USD / kg", value:92.50, changeDaily:1.1, changeWeekly:2.6, changeMonthly:4.8, seed:77},
-    {name:"Leather", unit:"USD / sq ft", value:3.95, changeDaily:-0.2, changeWeekly:-0.5, changeMonthly:-1.6, seed:88},
-    {name:"Natural Gas", unit:"USD / MMBtu", value:2.74, changeDaily:1.8, changeWeekly:3.1, changeMonthly:6.4, seed:99},
-    {name:"Brent Oil", unit:"USD / barrel", value:81.30, changeDaily:-0.5, changeWeekly:1.0, changeMonthly:-3.3, seed:110},
-    {name:"Electricity", unit:"EUR / MWh (IT)", value:118.40, changeDaily:0.9, changeWeekly:2.2, changeMonthly:5.5, seed:121},
-    {name:"EUR / USD", unit:"FX", value:1.082, changeDaily:0.1, changeWeekly:-0.2, changeMonthly:0.6, seed:132},
-    {name:"USD / CNY", unit:"FX", value:7.21, changeDaily:-0.1, changeWeekly:0.1, changeMonthly:-0.3, seed:143},
-  ].map(c => ({...c, series: genSeries(c.seed), updatedAt: "2 min ago"}));
+  addLine();
+})();
 
-  function trendClass(n){ return n > 0.05 ? 'pos' : n < -0.05 ? 'neg' : 'flat'; }
-  function sparkSvg(series, cls){
-    const w=160, h=40, min=Math.min(...series), max=Math.max(...series), range=(max-min)||1;
-    const pts = series.map((v,i)=>{
-      const x = (i/(series.length-1))*w;
-      const y = h - ((v-min)/range)*h*0.82 - h*0.09;
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    }).join(' ');
-    const colorVar = cls==='pos' ? 'var(--mkt-pos)' : cls==='neg' ? 'var(--mkt-neg)' : 'var(--mkt-neutral)';
-    return `<svg class="mkt-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-      <polyline points="${pts}" fill="none" stroke="${colorVar}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`;
-  }
-  function fullCard(c){
-    const cls = trendClass(c.changeDaily);
-    const arrow = cls==='pos' ? '▲' : cls==='neg' ? '▼' : '·';
-    return el(`<div class="mkt-card" data-commodity="${c.name}">
-      <div class="mkt-top">
-        <div><div class="mkt-name">${c.name}</div><div class="mkt-unit">${c.unit}</div></div>
-        <div class="mkt-updated">${c.updatedAt}</div>
-      </div>
-      <div class="mkt-value-row">
-        <span class="mkt-value">${c.value}</span>
-        <span class="mkt-change ${cls}">${arrow} ${Math.abs(c.changeDaily)}%</span>
-      </div>
-      ${sparkSvg(c.series, cls)}
-      <div class="mkt-trends">
-        <div class="mkt-trend">7D <b class="${trendClass(c.changeWeekly)}">${c.changeWeekly>0?'+':''}${c.changeWeekly}%</b></div>
-        <div class="mkt-trend">30D <b class="${trendClass(c.changeMonthly)}">${c.changeMonthly>0?'+':''}${c.changeMonthly}%</b></div>
-      </div>
-    </div>`);
-  }
-  function compactCard(c){
-    const cls = trendClass(c.changeDaily);
-    const arrow = cls==='pos' ? '▲' : cls==='neg' ? '▼' : '·';
-    return el(`<div class="mkt-card mkt-card--compact" data-commodity="${c.name}">
-      <div class="mkt-cleft">
-        <div class="mkt-name">${c.name}</div>
-        <div class="mkt-value-row"><span class="mkt-value">${c.value}</span><span class="mkt-change ${cls}">${arrow} ${Math.abs(c.changeDaily)}%</span></div>
-      </div>
-      ${sparkSvg(c.series, cls)}
-    </div>`);
-  }
-  const byName = (n) => commodities.find(c => c.name === n);
-  const tickerLeftItems = ["Cotton","Wool","Cashmere","Silk"].map(byName);
-  const tickerRightItems = ["Brent Oil","Natural Gas","Electricity","EUR / USD"].map(byName);
-  document.getElementById('tickerLeft').append(...tickerLeftItems.map(compactCard));
-  document.getElementById('tickerRight').append(...tickerRightItems.map(compactCard));
-  document.getElementById('marketGrid').append(...commodities.map(fullCard));
-
-  // Ticker rails are active from the Featured Story section through to just before the dark Newsletter band
-  const tickerEls = [...document.querySelectorAll('.market-ticker')];
-  const tickerStartEl = document.getElementById('featured');
-  const tickerEndEl = document.querySelector('.newsletter');
-  const updateTickerVisibility = () => {
-    const startY = tickerStartEl.offsetTop - 200;
-    const endY = tickerEndEl ? tickerEndEl.offsetTop - 200 : Infinity;
-    const active = window.scrollY > startY && window.scrollY < endY;
-    tickerEls.forEach(t => t.classList.toggle('is-active', active));
-  };
-  window.addEventListener('scroll', updateTickerVisibility, {passive:true});
-  window.addEventListener('resize', updateTickerVisibility);
-  updateTickerVisibility();
-
-  document.getElementById('agendaRail').append(...agenda.map(([cat,title,author,time]) => el(`
-    <div class="agenda-card">
-      <div class="agenda-media"><img loading="lazy" src="assets/images/agenda-luxury-workspace.png" alt="Agenda item"></div>
-      <div class="cat">${cat}</div>
-      <h4>${title}</h4>
-      <div class="meta">${author} · ${time} read</div>
-    </div>`)));
-
-  document.getElementById('newsGrid').append(...news.map(n => el(`
-    <div class="news-card ${n.lead?'lead':''}">
-      <div class="news-media"><img loading="lazy" src="assets/images/news-ai-lab.png" alt="News image"></div>
-      <span class="badge-editor">Editorial</span>
-      <div class="cat">${n.cat}</div>
-      <h4>${n.title}</h4>
-      <div class="meta"><span>${n.author}</span><span class="dot"></span><span>${n.time} read</span><span class="dot"></span><span>${n.date}</span></div>
-    </div>`)));
-
-  document.getElementById('discList').append(...discussions.map(([cat,title,votes,replies,avs]) => el(`
-    <div class="disc-row">
-      <div class="vote"><span class="n">${votes}</span><span class="l">Votes</span></div>
-      <div class="disc-main">
-        <div class="cat">${cat}</div>
-        <h4>${title}</h4>
-        <div class="meta">
-          <div class="avatars">${avs.map(a=>`<img src="assets/images/avatar-executive.png" alt="Contributor">`).join('')}</div>
-          <span>${avs.length} contributors</span><span class="dot"></span><span>Active now</span>
-        </div>
-      </div>
-      <div class="disc-right"><span class="replies">${replies}</span>replies</div>
-    </div>`)));
-
-  document.getElementById('qGrid').append(...questions.map(q => el(`
-    <div class="q-card">
-      <div class="tags">${q.tags.map(t=>`<span class="q-tag">${t}</span>`).join('')}</div>
-      <h4>${q.q}</h4>
-      <div class="answer-row">
-        <img src="assets/images/avatar-engineer.png" alt="Expert">
-        <div class="answer-meta">
-          <div class="name">${q.expert} <span class="verified"></span></div>
-          <div class="role">${q.role}</div>
-        </div>
-        ${q.accepted ? '<div class="accepted">✓ Best Answer</div>' : ''}
-      </div>
-    </div>`)));
-
-  document.getElementById('eventsRail').append(...events.map(([day,mon,type,title]) => el(`
-    <div class="event-card">
-      <div class="event-date"><span class="day">${day}</span><span class="mon">${mon}</span></div>
-      <div class="event-body">
-        <div class="type">${type}</div>
-        <h4>${title}</h4>
-        <div class="loc">Follow for updates →</div>
-      </div>
-    </div>`)));
-
-  document.getElementById('picksStrip').append(...picks.map(([k,title,seed]) => el(`
-    <div class="pick">
-      <img src="assets/images/avatar-supply-chain.png" alt="Pick">
-      <div><div class="n">${k}</div><h5>${title}</h5></div>
-    </div>`)));
-
-  // ---- Nav scroll state ----
-  const header = document.getElementById('siteHeader');
-  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-
-  // ---- Subtle parallax on the contained hero image ----
-  const heroEl = document.getElementById('hero');
-  const heroImg = document.getElementById('heroImgMain');
-  window.addEventListener('scroll', () => {
-    const y = Math.min(Math.max(window.scrollY, 0), heroEl.offsetHeight);
-    heroImg.style.transform = `scale(1.08) translateY(${y * 0.06}px)`;
-  }, {passive:true});
-
-  // ---- Reveal on scroll ----
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('is-visible'); });
-  }, {threshold:.12});
-  revealEls.forEach(e => io.observe(e));
-
-  // ---- Folio rail active section ----
-  const folioLabels = document.querySelectorAll('.folio-label');
-  const sections = [...folioLabels].map(l => document.getElementById(l.dataset.for)).filter(Boolean);
-  const folioIO = new IntersectionObserver((entries) => {
+// ── SCROLL REVEAL ──
+(function(){
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      const label = document.querySelector(`.folio-label[data-for="${entry.target.id}"]`);
-      if(label) label.classList.toggle('is-active', entry.isIntersecting);
+      if(entry.isIntersecting){
+        entry.target.classList.add('revealed');
+      }
     });
-  }, {threshold:.5});
-  sections.forEach(s => folioIO.observe(s));
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
 
-  // ---- Chip filter (visual only) ----
-  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
-    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
-    c.classList.add('active');
-  }));
-
-  // ---- Newsletter fake submit ----
-  document.querySelector('.nl-form').addEventListener('submit', (e) => {
-    const btn = e.target.querySelector('button');
-    btn.textContent = 'Subscribed ✓';
-    e.target.querySelector('input').value = '';
+// ── NAV ACTIVE STATE ──
+(function(){
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const top = section.offsetTop - 100;
+      if(window.scrollY >= top) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if(link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
   });
+})();
+
+// ── COUNTER ANIMATION ──
+(function(){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const num = entry.target;
+        const target = parseInt(num.getAttribute('data-target'));
+        let current = 0;
+        const increment = Math.ceil(target / 40);
+        const timer = setInterval(() => {
+          current += increment;
+          if(current >= target){ current = target; clearInterval(timer); }
+          num.textContent = current + (target === 100 ? '%' : '+');
+        }, 40);
+        observer.unobserve(num);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num').forEach(el => observer.observe(el));
+})();
+
+// ── INTERACTIVE TERMINAL ──
+(function(){
+  const input = document.getElementById('terminalInput');
+  const body = document.getElementById('terminalBody');
+  const commands = {
+    help: () => `Comandi disponibili:
+  skills    - Mostra competenze tecniche
+  projects  - Elenco progetti realizzati
+  about     - Chi sono
+  contact   - Come contattarmi
+  clear     - Pulisci terminale
+  matrix    - Attiva modalità matrix
+  echo      - Ripeti il testo`,
+    skills: () => `COMPETENZE TECNICHE:
+  ▸ Frontend: HTML5, CSS3, JavaScript ES6+, React, TypeScript
+  ▸ Backend: NestJS, Node.js, Prisma ORM, PostgreSQL
+  ▸ Design: UI/UX, Canvas API, Animazioni CSS
+  ▸ AI: Prompt Engineering, Claude, GPT, Workflow AI
+  ▸ CAD: Applicazioni web-based, Dashboard KPI
+  ▸ Tools: Vite, Vitest, Git, CLI`,
+    projects: () => `PROGETTI REALIZZATI:
+  [01] ERP Textile 3.0     — Piattaforma ERP completa
+  [02] TessituraCAD        — CAD web per tessitura
+  [03] Supply Chain Monitor — Dashboard KPI real-time
+  [04] Forum della Moda    — Piattaforma editoriale
+  [05] MRP iPhone Planner  — Pianificazione MRP mobile
+  [06] Project Suite       — Suite project management`,
+    about: () => `RONALDO RISKA
+  Web Developer & Content Creator
+  Base: Prato, Italia
+  
+  Sviluppatore full-stack con esperienza nella filiera tessile.
+  Specializzato in applicazioni web complesse, dashboard industriali
+  e creazione di contenuti digitali. Ogni progetto è un problema
+  risolto con codice pulito e design funzionale.`,
+    contact: () => `CONTATTI:
+  ✉ Email: ronaldo.riska@gmail.com
+  ⚡ GitHub: github.com/ItalyCircularFashion
+  🌐 Portfolio: italycircularfashion.github.io/RonaldoRiska/
+  📄 CV: italycircularfashion.github.io/RonaldoRiskaCV/`,
+    clear: () => { setTimeout(() => { body.innerHTML = ''; }, 50); return ''; },
+    matrix: () => { document.getElementById('matrixRain').style.opacity = '0.15'; return 'Modalità matrix attivata. 🦋'; },
+    echo: (args) => args.join(' ') || 'Inserisci testo dopo echo.'
+  };
+  function execute(cmd){
+    const parts = cmd.trim().toLowerCase().split(/\s+/);
+    const name = parts[0];
+    const args = parts.slice(1);
+    const line = document.createElement('div');
+    line.innerHTML = '<span class="prompt"></span>';
+    body.appendChild(line);
+    const output = document.createElement('div');
+    output.className = 'output';
+    if(commands[name]){
+      const result = commands[name](args);
+      if(result) output.textContent = result;
+    } else {
+      output.innerHTML = `Comando non riconosciuto: <span class="highlight">${name}</span>. Digita 'help' per i comandi.`;
+    }
+    body.appendChild(output);
+    body.scrollTop = body.scrollHeight;
+  }
+  input.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && input.value.trim()){
+      execute(input.value);
+      input.value = '';
+    }
+  });
+})();
+
+// ── SMOOTH SCROLL ──
+function scrollToSection(selector){
+  const el = document.querySelector(selector);
+  if(el) el.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
+
 </body>
 </html>
