@@ -15,7 +15,7 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:640px;margin:0 auto;padding:28px 18px 56px}
+main{max-width:720px;margin:0 auto;padding:28px 18px 56px}
 h1{font-size:clamp(36px,11vw,58px);line-height:.98;letter-spacing:-.035em;margin:0 0 12px;font-weight:700}
 h2{font-size:21px;letter-spacing:-.015em;margin:40px 0 6px;font-weight:700}
 .sub{color:var(--mute);margin:0 0 22px;max-width:46ch}
@@ -32,8 +32,8 @@ button{font:700 15px "Bricolage Grotesque",system-ui,sans-serif;cursor:pointer;b
 .hint,.leg,.r small{color:var(--mute);font-size:13.5px}
 .hint{margin:12px 0 0}
 canvas{display:block;width:100%;border-radius:24px}
-#art{aspect-ratio:1;max-width:480px;margin:14px auto 0;cursor:pointer}
-#traj{height:240px;margin-top:12px}
+#art{aspect-ratio:1;max-width:540px;margin:14px auto 0;cursor:pointer}
+#traj{height:300px;margin-top:12px}
 .leg{margin:12px 0 0;max-width:52ch}
 .r{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:0 12px;padding:12px 0;border-top:1px solid var(--line)}
 .r b{font-size:30px;letter-spacing:-.03em;line-height:1.1}
@@ -111,7 +111,15 @@ sgn=v=>Math.round(v*100)+'%',
 col=(t,a=1)=>`hsla(${t>=0?40:212},${25+70*Math.min(1,Math.abs(t))}%,${84-24*Math.min(1,Math.abs(t))}%,${a})`,
 niceStep=s=>{const e=Math.pow(10,Math.floor(Math.log10(s))),m=s/e;return(m>=5?5:m>=2?2:1)*e},
 GW=Array.from({length:8},(_,j)=>Math.pow(PHI,-(j+1))),GWN=GW.reduce((a,b)=>a+b,0),
-LV=[1,2,3,5,8,13,21],USED=new Set([1,2,3,5,8,13,21,89,144]),TAU=PHI/100;
+LV=[1,2,3,5,8,13,21],USED=new Set([1,2,3,5,8,13,21,89,144]),TAU=PHI/100,
+hud=(x,w,h)=>{x.save();x.strokeStyle='rgba(0,240,255,.55)';x.lineWidth=1.5;const p=13,l=22;
+ [[p,p,1,1],[w-p,p,-1,1],[p,h-p,1,-1],[w-p,h-p,-1,-1]].forEach(([px,py,sx,sy])=>{x.beginPath();x.moveTo(px+sx*l,py);x.lineTo(px,py);x.lineTo(px,py+sy*l);x.stroke()});x.restore()},
+scan=(x,w,h)=>{x.fillStyle='rgba(0,0,0,.25)';for(let y=0;y<h;y+=4)x.fillRect(0,y,w,1)},
+grid=(x,w,h,st)=>{x.save();x.strokeStyle='rgba(0,240,255,.07)';x.lineWidth=1;x.beginPath();
+ for(let gx=st;gx<w;gx+=st){x.moveTo(gx,0);x.lineTo(gx,h)}for(let gy=st;gy<h;gy+=st){x.moveTo(0,gy);x.lineTo(w,gy)}x.stroke();x.restore()},
+ring=(x,cx,cy,R)=>{x.save();x.strokeStyle='rgba(0,240,255,.35)';x.lineWidth=1;
+ for(let i=0;i<60;i++){const a=i/60*Math.PI*2,lg=i%5===0,r1=R+5,r2=R+(lg?15:9);
+  x.beginPath();x.moveTo(cx+r1*Math.cos(a),cy+r1*Math.sin(a));x.lineTo(cx+r2*Math.cos(a),cy+r2*Math.sin(a));x.stroke()}x.restore()};
 
 function sim(q,salt,H){
  const t=q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim(),
@@ -145,6 +153,7 @@ const prep=c=>{const r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=r
 function art(p){
  const[x,w,h]=prep($('#art')),R=Math.min(w,h)/2-16,cx=w/2,cy=h/2,g=x.createRadialGradient(cx,cy,0,cx,cy,w*.75);
  g.addColorStop(0,'#1d2870');g.addColorStop(1,'#070b22');x.fillStyle=g;x.fillRect(0,0,w,h);
+ grid(x,w,h,28);scan(x,w,h);hud(x,w,h);
  x.lineWidth=1;x.font='9.5px system-ui,sans-serif';x.textBaseline='middle';x.textAlign='left';
  [[.236,'23,6'],[.382,'38,2'],[.618,'61,8'],[1,'100']].forEach(([f,s])=>{
   x.strokeStyle='rgba(255,255,255,.08)';x.beginPath();x.arc(cx,cy,R*f,0,7);x.stroke();
@@ -152,6 +161,7 @@ function art(p){
  x.strokeStyle='rgba(245,181,58,.4)';x.beginPath();
  for(let a=0;a<=3.5*Math.PI*p;a+=.05){const r=R/29*Math.pow(PHI,a*2/Math.PI);a?x.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):x.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a))}
  x.stroke();
+ ring(x,cx,cy,R);
  const n=Math.floor(89*p),glow=p>=.999?12:6;
  S.order.slice(0,n).forEach((id,i)=>{const r=R*Math.sqrt((i+.5)/89),a=i*2.399963,t=S.fin[id]/(S.p90||S.mx);
   x.fillStyle=x.shadowColor=col(t);x.shadowBlur=glow;x.beginPath();x.arc(cx+r*Math.cos(a),cy+r*Math.sin(a),3+8*Math.min(1,Math.abs(t)),0,7);x.fill()});
@@ -172,7 +182,7 @@ function traj(p){
  const[x,w,h]=prep($('#traj')),l=34,rr=46,T=12,B=24,H=S.H,un=$('#u').value,
  X=k=>l+(w-l-rr)*k/H,Y=v=>T+(h-T-B)*(1-(v-S.lo)/((S.hi-S.lo)||1)),ks=LV.filter(k=>k<=H),
  rng=((S.hi-S.lo)||1),st=niceStep(rng/4);
- x.fillStyle='#0c1236';x.fillRect(0,0,w,h);x.font='10px system-ui,sans-serif';x.textBaseline='middle';
+ x.fillStyle='#0c1236';x.fillRect(0,0,w,h);scan(x,w,h);grid(x,w,h,30);x.font='10px system-ui,sans-serif';x.textBaseline='middle';
  for(let v=Math.ceil(S.lo/st)*st;v<=S.hi;v+=st){
   x.strokeStyle='rgba(255,255,255,.05)';x.lineWidth=1;x.beginPath();x.moveTo(l,Y(v));x.lineTo(w-rr+4,Y(v));x.stroke();
   x.fillStyle='rgba(255,255,255,.4)';x.textAlign='right';x.fillText(Math.round(v),l-5,Y(v))}
@@ -189,6 +199,7 @@ function traj(p){
  x.globalAlpha=sel==null?1:.55;
  x.strokeStyle=x.shadowColor='#f5b53a';x.lineWidth=2.6;x.shadowBlur=10;x.beginPath();S.mp.forEach((y,k)=>k?x.lineTo(X(k),Y(y)):x.moveTo(X(k),Y(y)));x.stroke();x.shadowBlur=0;x.globalAlpha=1;
  x.fillStyle='#fff';ks.forEach(k=>{x.beginPath();x.arc(X(k),Y(S.mp[k]),3,0,7);x.fill()});
+ hud(x,w,h);
  if(ks.includes(S.key)){
   x.strokeStyle='rgba(255,255,255,.45)';x.lineWidth=1;x.beginPath();x.arc(X(S.key),Y(S.mp[S.key]),8,0,7);x.stroke();
   x.font='9.5px system-ui,sans-serif';x.fillStyle='rgba(255,255,255,.75)';x.textAlign='center';x.fillText('k='+S.key,X(S.key),Y(S.mp[S.key])-15)}
@@ -263,6 +274,7 @@ $('#ex').innerHTML=EX.map((e,i)=>`<button class="chip" data-i="${i}">${e}</butto
 $('#fseq').innerHTML=FB.map((f,i)=>`<span class="fs${USED.has(f)?' on':''}"><b>${f}</b><em>F<sub>${i}</sub></em></span>`).join('');
 $('#ex').onclick=e=>{const b=e.target.closest('button');if(b){$('#q').value=EX[b.dataset.i];salt=0;render()}};
 addEventListener('resize',()=>S&&draw(1));
+if(location.search.includes('theme=dark'))document.documentElement.dataset.theme='dark';
 render();
 </script>
 </body>
