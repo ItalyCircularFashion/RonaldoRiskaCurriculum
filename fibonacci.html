@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulatore di futuri Fibonacci</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121a45'/%3E%3Cpath d='M6 24 Q16 4 26 16' stroke='%23f5b53a' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eceef5;--sf:#f8f9fd;--ink:#121a45;--mute:#5a6290;--line:#d3d8ea;--acc:#9a5700;--up:#e89a0c;--dn:#2c6bd8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1030;--sf:#141b47;--ink:#eef0fa;--mute:#9aa3d0;--line:#27316b;--acc:#f5b53a;--up:#f5b53a;--dn:#6fb0ff}}
+:root[data-theme="dark"]{--bg:#0b1030;--sf:#141b47;--ink:#eef0fa;--mute:#9aa3d0;--line:#27316b;--acc:#f5b53a;--up:#f5b53a;--dn:#6fb0ff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:640px;margin:0 auto;padding:28px 18px 56px}
+h1{font-size:clamp(36px,11vw,58px);line-height:.98;letter-spacing:-.035em;margin:0 0 12px;font-weight:700}
+h2{font-size:21px;letter-spacing:-.015em;margin:40px 0 6px;font-weight:700}
+.sub{color:var(--mute);margin:0 0 22px;max-width:46ch}
+textarea,select{border:1px solid var(--line);border-radius:14px;background:var(--sf);color:var(--ink);font:inherit}
+textarea{width:100%;min-height:84px;resize:vertical;padding:13px 14px}
+select{flex:1;min-width:120px;font-size:15px;padding:10px 12px}
+textarea:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--dn);outline-offset:2px}
+.row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+button{font:700 15px "Bricolage Grotesque",system-ui,sans-serif;cursor:pointer;border-radius:999px;padding:12px 20px;border:1px solid var(--ink)}
+.go{flex:1;background:var(--ink);color:var(--bg)}
+.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.chip{white-space:nowrap;background:transparent;color:var(--mute);border:1px solid var(--line);padding:6px 13px;font-weight:400;font-size:13.5px}
+.hint,.leg,.r small{color:var(--mute);font-size:13.5px}
+.hint{margin:12px 0 0}
+canvas{display:block;width:100%;border-radius:24px}
+#art{aspect-ratio:1;max-width:480px;margin:14px auto 0;cursor:pointer}
+#traj{height:240px;margin-top:12px}
+.leg{margin:12px 0 0;max-width:52ch}
+.r{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:0 12px;padding:12px 0;border-top:1px solid var(--line)}
+.r b{font-size:30px;letter-spacing:-.03em;line-height:1.1}
+.r em{font-style:normal;color:var(--mute);font-size:15px;margin-left:6px}
+.r i{font-style:normal;font-weight:700;font-size:20px;color:var(--acc)}
+.r small{grid-column:1/-1}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0 0}
+.kpi b{display:block;font-size:40px;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.kpi span{font-size:13.5px;color:var(--mute)}
+.u b{color:var(--acc)}.d b{color:var(--dn)}
+.bar{display:flex;height:10px;border-radius:9px;overflow:hidden;margin:12px 0 16px;background:var(--line)}
+.bar i{display:block;transition:flex .6s}
+#bu{background:var(--up)}#bs{background:var(--mute);opacity:.45}#bd{background:var(--dn)}
+.v{max-width:54ch;margin:16px 0 0}
+.fseq{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin:20px 0 0}
+.fs{display:flex;flex-direction:column;align-items:center;min-width:30px}
+.fs b{font-size:15px;letter-spacing:-.01em;line-height:1.25}
+.fs em{font-style:normal;font-size:10px;color:var(--mute)}
+.fs.on b{color:var(--acc)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+#selinfo{margin:10px 0 0}
+#selinfo b{color:var(--ink)}
+#unsel{display:none;margin-top:10px}
+#unsel.on{display:inline-block}
+#tip{position:fixed;left:0;top:0;z-index:9;pointer-events:none;background:var(--ink);color:var(--bg);font:600 12.5px/1.45 "Bricolage Grotesque",system-ui,sans-serif;padding:7px 11px;border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.28);transform:translate(-50%,calc(-100% - 14px));white-space:nowrap;opacity:0;transition:opacity .12s}
+#tip.on{opacity:1}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}#tip{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Simulatore di futuri</h1>
+<p class="sub">Scrivi una domanda. Lettere, parole e cifre diventano numeri; il sistema Fibonacci li trasforma in 89 futuri possibili, ognuno con memoria dei passi aurei.</p>
+<textarea id="q" maxlength="280" aria-label="La tua domanda">Il nuovo tessuto riciclato che lancio in primavera avrà successo?</textarea>
+<div class="chips" id="ex"></div>
+<div class="row">
+<select id="u" aria-label="Unità di tempo"><option>giorni</option><option>settimane</option><option selected>mesi</option><option>anni</option></select>
+<select id="h" aria-label="Orizzonte"><option value="8">8 periodi</option><option value="13" selected>13 periodi</option><option value="21">21 periodi</option></select>
+</div>
+<div class="row"><button class="go" id="go">Simula il futuro</button><button class="alt" id="alt">Altro futuro</button></div>
+<p class="hint">Stessa domanda, stesso futuro: cambiano le parole, cambiano i numeri.</p>
+
+<h2>Mappa dei futuri</h2>
+<canvas id="art" role="img" aria-label="Mappa di 89 futuri simulati disposti secondo l'angolo aureo"></canvas>
+<p class="leg">Ogni punto è un futuro simulato (89 = F<sub>11</sub>), disposto secondo l’angolo aureo. Al centro i più probabili, sul bordo gli estremi; l’anello bianco è lo scenario mediano. Zafferano indica crescita, azzurro contrazione. Tocca un punto per seguirne la traiettoria.</p>
+<p class="hint" id="selinfo" hidden></p>
+<div class="row"><button class="alt" id="unsel">Annulla selezione</button></div>
+
+<h2>La sequenza</h2>
+<p class="sub">F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n-2</sub>, senza fine: dopo 377 vengono 610, 987, 1597… In arancione i termini che il simulatore usa davvero — gli altri sono lì per mostrare dove si ferma il modello.</p>
+<div class="fseq" id="fseq" aria-label="Sequenza di Fibonacci da F0 a F14"></div>
+
+<h2>Dalla domanda ai numeri</h2>
+<div id="tiles"></div>
+
+<h2>Traiettorie e livelli Fibonacci</h2>
+<canvas id="traj" role="img" aria-label="Fascio di traiettorie simulate con livelli di ritracciamento Fibonacci"></canvas>
+<div class="kpi"><div class="u"><b id="pu"></b><span>crescita</span></div><div><b id="ps"></b><span>stabilità</span></div><div class="d"><b id="pd"></b><span>contrazione</span></div></div>
+<div class="bar"><i id="bu"></i><i id="bs"></i><i id="bd"></i></div>
+<div id="stat"></div>
+<p class="v" id="v"></p>
+<p class="sr-only" id="live" aria-live="polite"></p>
+</main>
+<div id="tip" aria-hidden="true"></div>
+<script>
+const $=s=>document.querySelector(s),FB=[0,1,1,2,3,5,8,13,21,34,55,89,144,233,377],PHI=1.618034,
+EX=['Conviene investire in un nuovo telaio?','Il mio brand avrà successo l’anno prossimo?','Troverò il lavoro giusto?'];
+let S,salt=0,raf,sel=null,hover=null,animating=false;
+const near=n=>{let b=2;for(let j=3;j<FB.length;j++)if(Math.abs(FB[j]-n)<Math.abs(FB[b]-n))b=j;return b},
+hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0},
+rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296},
+med=a=>[...a].sort((x,y)=>x-y)[a.length>>1],
+pc=x=>(x*100).toFixed(1).replace('.',',')+'%',sg=x=>(x>0?'+':'')+pc(x),
+sgn=v=>Math.round(v*100)+'%',
+col=(t,a=1)=>`hsla(${t>=0?40:212},${25+70*Math.min(1,Math.abs(t))}%,${84-24*Math.min(1,Math.abs(t))}%,${a})`,
+niceStep=s=>{const e=Math.pow(10,Math.floor(Math.log10(s))),m=s/e;return(m>=5?5:m>=2?2:1)*e},
+GW=Array.from({length:8},(_,j)=>Math.pow(PHI,-(j+1))),GWN=GW.reduce((a,b)=>a+b,0),
+LV=[1,2,3,5,8,13,21],USED=new Set([1,2,3,5,8,13,21,89,144]),TAU=PHI/100;
+
+function sim(q,salt,H){
+ const t=q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim(),
+ L=t.replace(/ /g,'').length||1,W=t?t.split(' ').length:1;
+ let n=0;for(const c of t)n+=c>='a'?c.charCodeAt(0)-96:c>='0'?+c:0;
+ let R=n;while(R>9)R=[...String(R)].reduce((x,y)=>x+ +y,0);R=R||1;
+ const seed=hash(t+'|'+salt),rnd=rng(seed),kL=near(L),kW=near(W),fm=Math.max(3,Math.min(21,FB[kW])),
+ s=.25+Math.min(FB[kL],144)/144*.6,p=.382+(R-1)/8*.236,
+ pool=FB.slice(2).filter(f=>f<=fm),w=pool.map(f=>1/f),tw=w.reduce((x,y)=>x+y),paths=[];
+ for(let i=0;i<89;i++){const v=[100],d=[];
+  for(let k=0;k<H;k++){
+   let M=0;for(let j=1;j<=Math.min(8,d.length);j++)M+=GW[j-1]*d[d.length-j];
+   M=d.length?M/GWN:0;
+   const pi=Math.min(.9,Math.max(.1,.382+.236*((1-1/PHI)*(R-1)/8+(1/PHI)*(M+1)/2)));
+   const u=rnd()<pi?1:-1;d.push(u);
+   let x=rnd()*tw,j=0;while(j<w.length-1&&x>w[j]){x-=w[j];j++}
+   const vol=1+.382*Math.abs(M);
+   v.push(v[k]*(1+u*pool[j]*s*vol/100))}
+  paths.push(v)}
+ const fin=paths.map(v=>v[H]/100-1),mf=med(fin),mx=Math.max(...fin.map(Math.abs))||1e-9,
+ fs=[...fin].sort((a,b)=>a-b),p10=fs[8],p90=fs[80],
+ mp=Array.from({length:H+1},(_,k)=>med(paths.map(v=>v[k]))),all=paths.flat(),hi=Math.max(...all),lo=Math.min(...all),
+ up=fin.filter(r=>r>TAU).length/89,dn=fin.filter(r=>r<-TAU).length/89,
+ order=fin.map((r,i)=>i).sort((a,b)=>Math.abs(fin[a]-mf)-Math.abs(fin[b]-mf));
+ const ks=LV.filter(k=>k<=H);let key=ks[0],kb=-1;ks.forEach(k=>{const line=100+(mp[H]-100)*k/H;if(Math.abs(mp[k]-line)>kb){kb=Math.abs(mp[k]-line);key=k}});
+ return{L,W,R,kL,kW,fm,p,seed,H,paths,fin,mf,mx,p10,p90,mp,hi,lo,pUp:up,pDn:dn,pSt:1-up-dn,order,key}
+}
+
+const prep=c=>{const r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=r.width*d;c.height=r.height*d;const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return[x,r.width,r.height]};
+
+function art(p){
+ const[x,w,h]=prep($('#art')),R=Math.min(w,h)/2-16,cx=w/2,cy=h/2,g=x.createRadialGradient(cx,cy,0,cx,cy,w*.75);
+ g.addColorStop(0,'#1d2870');g.addColorStop(1,'#070b22');x.fillStyle=g;x.fillRect(0,0,w,h);
+ x.lineWidth=1;x.font='9.5px system-ui,sans-serif';x.textBaseline='middle';x.textAlign='left';
+ [[.236,'23,6'],[.382,'38,2'],[.618,'61,8'],[1,'100']].forEach(([f,s])=>{
+  x.strokeStyle='rgba(255,255,255,.08)';x.beginPath();x.arc(cx,cy,R*f,0,7);x.stroke();
+  x.fillStyle='rgba(255,255,255,.4)';x.fillText(s+'%',cx+R*f*.707+5,cy-R*f*.707-1)});
+ x.strokeStyle='rgba(245,181,58,.4)';x.beginPath();
+ for(let a=0;a<=3.5*Math.PI*p;a+=.05){const r=R/29*Math.pow(PHI,a*2/Math.PI);a?x.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):x.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a))}
+ x.stroke();
+ const n=Math.floor(89*p),glow=p>=.999?12:6;
+ S.order.slice(0,n).forEach((id,i)=>{const r=R*Math.sqrt((i+.5)/89),a=i*2.399963,t=S.fin[id]/(S.p90||S.mx);
+  x.fillStyle=x.shadowColor=col(t);x.shadowBlur=glow;x.beginPath();x.arc(cx+r*Math.cos(a),cy+r*Math.sin(a),3+8*Math.min(1,Math.abs(t)),0,7);x.fill()});
+ x.shadowBlur=0;
+ if(sel!=null){const i=S.order.indexOf(sel);if(i>=0){const r=R*Math.sqrt((i+.5)/89),a=i*2.399963,px=cx+r*Math.cos(a),py=cy+r*Math.sin(a);
+  x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(px,py,15,0,7);x.stroke();
+  x.strokeStyle='rgba(255,255,255,.35)';x.lineWidth=1;x.beginPath();x.arc(px,py,21,0,7);x.stroke()}}
+ else if(hover!=null){const i=S.order.indexOf(hover);if(i>=0){const r=R*Math.sqrt((i+.5)/89),a=i*2.399963;
+  x.strokeStyle='rgba(245,181,58,.9)';x.lineWidth=1.5;x.beginPath();x.arc(cx+r*Math.cos(a),cy+r*Math.sin(a),13,0,7);x.stroke()}}
+ if(n){const rx=cx+R*Math.sqrt(.5/89);
+  x.strokeStyle='rgba(255,255,255,.85)';x.lineWidth=1.5;x.beginPath();x.arc(rx,cy,13,0,7);x.stroke();
+  x.strokeStyle='rgba(255,255,255,.35)';x.lineWidth=1;x.beginPath();x.arc(rx,cy,18,0,7);x.stroke();
+  x.fillStyle='#fff';x.beginPath();x.arc(rx,cy,3,0,7);x.fill();
+  x.textAlign='center';x.fillStyle='rgba(255,255,255,.55)';x.fillText('mediano',rx,cy+33)}
+}
+
+function traj(p){
+ const[x,w,h]=prep($('#traj')),l=34,rr=46,T=12,B=24,H=S.H,un=$('#u').value,
+ X=k=>l+(w-l-rr)*k/H,Y=v=>T+(h-T-B)*(1-(v-S.lo)/((S.hi-S.lo)||1)),ks=LV.filter(k=>k<=H),
+ rng=((S.hi-S.lo)||1),st=niceStep(rng/4);
+ x.fillStyle='#0c1236';x.fillRect(0,0,w,h);x.font='10px system-ui,sans-serif';x.textBaseline='middle';
+ for(let v=Math.ceil(S.lo/st)*st;v<=S.hi;v+=st){
+  x.strokeStyle='rgba(255,255,255,.05)';x.lineWidth=1;x.beginPath();x.moveTo(l,Y(v));x.lineTo(w-rr+4,Y(v));x.stroke();
+  x.fillStyle='rgba(255,255,255,.4)';x.textAlign='right';x.fillText(Math.round(v),l-5,Y(v))}
+ [[.236,'23,6'],[.382,'38,2'],[.5,'50'],[.618,'61,8'],[.786,'78,6']].forEach(([f,s])=>{const y=Y(S.lo+(S.hi-S.lo)*f);
+  x.strokeStyle='rgba(245,181,58,.3)';x.lineWidth=1;x.setLineDash([3,4]);x.beginPath();x.moveTo(l,y);x.lineTo(w-rr+4,y);x.stroke();x.setLineDash([]);
+  x.fillStyle='rgba(245,181,58,.9)';x.textAlign='left';x.fillText(s+'%',w-rr+8,y)});
+ x.strokeStyle='rgba(255,255,255,.5)';x.beginPath();x.moveTo(l,Y(100));x.lineTo(w-rr+4,Y(100));x.stroke();
+ x.fillStyle='rgba(255,255,255,.7)';x.textAlign='left';x.fillText('oggi',l+2,Y(100)-9);
+ x.textAlign='center';x.fillStyle='rgba(255,255,255,.6)';ks.forEach(k=>x.fillText(k,X(k),h-9));
+ x.textAlign='right';x.fillStyle='rgba(255,255,255,.35)';x.fillText(un,w-4,h-9);
+ x.save();x.beginPath();x.rect(0,0,l+(w-l-rr)*p+1,h);x.clip();
+ S.paths.forEach((v,i)=>{x.strokeStyle=col(S.fin[i]/S.mx,sel==null?.22:.1);x.lineWidth=1;x.beginPath();v.forEach((y,k)=>k?x.lineTo(X(k),Y(y)):x.moveTo(X(k),Y(y)));x.stroke()});
+ if(sel!=null){const v=S.paths[sel];x.strokeStyle='#fff';x.lineWidth=2.2;x.beginPath();v.forEach((y,k)=>k?x.lineTo(X(k),Y(y)):x.moveTo(X(k),Y(y)));x.stroke()}
+ x.globalAlpha=sel==null?1:.55;
+ x.strokeStyle=x.shadowColor='#f5b53a';x.lineWidth=2.6;x.shadowBlur=10;x.beginPath();S.mp.forEach((y,k)=>k?x.lineTo(X(k),Y(y)):x.moveTo(X(k),Y(y)));x.stroke();x.shadowBlur=0;x.globalAlpha=1;
+ x.fillStyle='#fff';ks.forEach(k=>{x.beginPath();x.arc(X(k),Y(S.mp[k]),3,0,7);x.fill()});
+ if(ks.includes(S.key)){
+  x.strokeStyle='rgba(255,255,255,.45)';x.lineWidth=1;x.beginPath();x.arc(X(S.key),Y(S.mp[S.key]),8,0,7);x.stroke();
+  x.font='9.5px system-ui,sans-serif';x.fillStyle='rgba(255,255,255,.75)';x.textAlign='center';x.fillText('k='+S.key,X(S.key),Y(S.mp[S.key])-15)}
+ x.restore()
+}
+
+function draw(p){art(p);traj(p)}
+function run(){cancelAnimationFrame(raf);animating=true;const t0=performance.now(),D=matchMedia('(prefers-reduced-motion:reduce)').matches?1:1600;
+ (function f(n){const p=Math.min(1,(n-t0)/D);draw(1-Math.pow(1-p,3));if(p<1)raf=requestAnimationFrame(f);else animating=false})(t0);
+ setTimeout(()=>{if(animating){draw(1);animating=false}},D+60)}
+
+function countUp(id,to){const el=$(id),from=+(el.dataset.v||0),t0=performance.now(),D=500;
+ (function f(n){const p=Math.max(0,Math.min(1,(n-t0)/D)),e=1-Math.pow(1-p,3);el.textContent=Math.round((from+(to-from)*e)*100)+'%';if(p<1)requestAnimationFrame(f);else el.dataset.v=to})(t0);
+ setTimeout(()=>{el.dataset.v=to;el.textContent=Math.round(to*100)+'%'},D+60)}
+
+function fill(){
+ const un=$('#u').value,H=S.H,r=v=>Math.round(v*100),
+ row=(a,b,c,d)=>`<div class="r"><span><b>${a}</b><em>${b}</em></span><i>${c}</i><small>${d}</small></div>`;
+ $('#tiles').innerHTML=row(S.L,'caratteri',`F<sub>${S.kL}</sub> = ${FB[S.kL]}`,'ampiezza dei passi')
+  +row(S.W,'parole',`F<sub>${S.kW}</sub> = ${FB[S.kW]}`,'scala dei passi moltiplicativi')
+  +row(S.R,'radice numerologica','p = '+S.p.toFixed(3).replace('.',','),'deriva di fondo, tra 0,382 e 0,618')
+  +row('#'+S.seed.toString(16).padStart(8,'0').slice(0,6).toUpperCase(),'seed','89 = F<sub>11</sub>','futuri simulati con memoria aurea φ⁻ʲ sui ritardi 1…8');
+ countUp('#pu',S.pUp);countUp('#ps',S.pSt);countUp('#pd',S.pDn);
+ $('#bu').style.flex=S.pUp;$('#bs').style.flex=S.pSt;$('#bd').style.flex=S.pDn;
+ $('#stat').innerHTML=row(sg(S.mf),'scenario mediano',`${H} ${un}`,'variazione del percorso centrale rispetto a oggi (base 100)')
+  +row(S.key,'periodo chiave',`F<sub>${FB.indexOf(S.key)}</sub>`,'dove il percorso mediano si discosta di più dalla tendenza');
+  +row(sg(S.lo/100-1)+' → '+sg(S.hi/100-1),'intervallo dei futuri','base 100','dal peggiore al migliore degli 89 futuri simulati');
+ const q618=S.lo+(S.hi-S.lo)*.618,
+ dom=[['Prevale la crescita',S.pUp],['Prevale la stabilità',S.pSt],['Prevale la contrazione',S.pDn]].sort((a,b)=>b[1]-a[1])[0];
+ $('#v').textContent=`${dom[0]}: ${r(dom[1])}% degli 89 futuri simulati finisce in quest’area. Quota ${Math.round(q618)} (livello 61,8%) è la soglia da osservare. Il 50% centrale dei futuri sta tra ${sgn(S.p10)} e ${sgn(S.p90)}. È una simulazione generativa per esplorare scenari, non una previsione.`;
+ $('#live').textContent=`Simulazione completata. Crescita ${r(S.pUp)} per cento, stabilità ${r(S.pSt)} per cento, contrazione ${r(S.pDn)} per cento. Scenario mediano ${sg(S.mf)} in ${H} ${un}. Periodo chiave ${S.key}. Intervallo dei futuri da ${sg(S.lo/100-1)} a ${sg(S.hi/100-1)}.`;
+}
+
+function updateSel(){
+ const el=$('#selinfo'),b=$('#unsel');
+ if(sel==null){el.hidden=true;b.classList.remove('on');b.onclick=null;return}
+ el.hidden=false;b.classList.add('on');
+ el.textContent='Futuro #'+sel+' ('+sg(S.fin[sel])+' in '+S.H+' '+$('#u').value+') evidenziato nella mappa e nella traiettoria.';
+ b.onclick=()=>{sel=null;updateSel();art(1);traj(1)}
+}
+
+function showTip(cx,cy,id){const t=$('#tip');t.textContent='Futuro #'+id+' · '+sg(S.fin[id])+' · '+S.H+' '+$('#u').value;t.style.left=cx+'px';t.style.top=cy+'px';t.classList.add('on')}
+function hideTip(){$('#tip').classList.remove('on')}
+
+function hit(mx,my,w,h){
+ const R=Math.min(w,h)/2-16,cx=w/2,cy=h/2;let best=null,bd=1e9;
+ S.order.forEach((id,i)=>{const r=R*Math.sqrt((i+.5)/89),a=i*2.399963,t=S.fin[id]/(S.p90||S.mx),
+  px=cx+r*Math.cos(a),py=cy+r*Math.sin(a),rad=3+8*Math.min(1,Math.abs(t)),
+  d=Math.hypot(mx-px,my-py);if(d<rad+7&&d<bd){bd=d;best=id}});
+ return best;
+}
+
+$('#art').addEventListener('mousemove',e=>{
+ if(animating||!S)return;
+ const r=e.currentTarget.getBoundingClientRect(),id=hit(e.clientX-r.left,e.clientY-r.top,r.width,r.height);
+ if(id!==hover){hover=id;art(1)}
+ if(id!=null)showTip(e.clientX,e.clientY,id);else hideTip()});
+$('#art').addEventListener('mouseleave',()=>{if(hover!=null){hover=null;art(1)}hideTip()});
+$('#art').addEventListener('click',e=>{
+ if(animating||!S)return;
+ const r=e.currentTarget.getBoundingClientRect(),id=hit(e.clientX-r.left,e.clientY-r.top,r.width,r.height);
+ if(id!=null){sel=sel===id?null:id;updateSel();art(1);traj(1);showTip(e.clientX,e.clientY,id);setTimeout(hideTip,1400)}});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&sel!=null){sel=null;updateSel();art(1);traj(1)}});
+
+function render(){const q=$('#q').value.trim();if(!q)return $('#q').focus();sel=null;hover=null;updateSel();hideTip();S=sim(q,salt,+$('#h').value);fill();run()}
+
+$('#go').onclick=()=>{salt=0;render()};
+$('#alt').onclick=()=>{salt++;render()};
+$('#u').onchange=$('#h').onchange=render;
+$('#q').onkeydown=e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){salt=0;render()}};
+$('#ex').innerHTML=EX.map((e,i)=>`<button class="chip" data-i="${i}">${e}</button>`).join('');
+$('#fseq').innerHTML=FB.map((f,i)=>`<span class="fs${USED.has(f)?' on':''}"><b>${f}</b><em>F<sub>${i}</sub></em></span>`).join('');
+$('#ex').onclick=e=>{const b=e.target.closest('button');if(b){$('#q').value=EX[b.dataset.i];salt=0;render()}};
+addEventListener('resize',()=>S&&draw(1));
+render();
+</script>
+</body>
+</html>
