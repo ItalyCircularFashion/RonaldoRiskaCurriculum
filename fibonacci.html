@@ -62,6 +62,7 @@ canvas{display:block;width:100%;border-radius:24px}
 #tip.on{opacity:1}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}#tip{transition:none}}
 </style>
+<link rel="stylesheet" href="mobile.css">
 </head>
 <body>
 <main>
@@ -277,5 +278,6 @@ addEventListener('resize',()=>S&&draw(1));
 if(location.search.includes('theme=dark'))document.documentElement.dataset.theme='dark';
 render();
 </script>
+<script src="mobile.js"></script>
 </body>
 </html>

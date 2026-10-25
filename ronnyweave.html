@@ -35,6 +35,7 @@ table{border-collapse:collapse;width:100%}td{padding:2px 4px;border-bottom:1px s
 tr.sel td{background:rgba(15,110,140,.18)}.dot{display:inline-block;width:14px;height:14px;border-radius:50%;border:1px solid var(--ln);vertical-align:-2px}
 @media(max-width:800px){#app{grid-template-columns:1fr;height:auto}#wrap{min-height:60vh}}
 </style>
+<link rel="stylesheet" href="mobile.css">
 </head>
 <body>
 <header><b>Tessuto CAD</b><span>Editor di armature, fili, filati e dati tecnici — tutto nel browser.</span>
@@ -279,5 +280,6 @@ $('#fw').onclick=()=>{if(ST.M[0].length>99)say('Attenzione: oltre 99 licci');dl(
 $('#fh').onclick=()=>dl('dati-tecnici.html','<!doctype html><meta charset="utf-8"><title>Dati tecnici</title>'+$('#tt').innerHTML,'text/html');
 init();
 </script>
+<script src="mobile.js"></script>
 </body>
 </html>

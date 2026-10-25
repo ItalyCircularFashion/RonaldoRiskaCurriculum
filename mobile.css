@@ -1,0 +1,440 @@
+/* ═══════════════════════════════════════════════════════════
+ * RONALDO RISKA — MOBILE RESPONSIVE
+ * Esteso da mobile-core.css
+ * Schermasi < 768px
+ * ═══════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────
+ * 1️⃣ BASE MOBILE-FIRST
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  :root {
+    --space-section: clamp(2.5rem, 9vw, 4rem);
+    --space-section-tight: clamp(1.5rem, 4vw, 2.2rem);
+    --space-card: clamp(0.9rem, 2.4vw, 1.2rem);
+    --radius: 7px;
+  }
+
+  html {
+    font-size: 15px;
+  }
+
+  body {
+    padding-block: var(--space-section-tight);
+    line-height: 1.5;
+    min-width: 0;
+  }
+
+  p,
+  li,
+  dd,
+  dt {
+    max-width: 100%;
+  }
+
+  h1 { font-size: clamp(2.2rem, 12vw, 3.6rem); line-height: 1.08; }
+  h2 { font-size: clamp(1.4rem, 6vw, 2.2rem); line-height: 1.1; }
+  h3 { font-size: clamp(0.95rem, 3.8vw, 1.15rem); line-height: 1.2; }
+
+  .container,
+  .narrow {
+    width: 100%;
+    padding-inline: clamp(0.8rem, 4vw, 1.5rem);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 2️⃣ NAV + HEADER — Mobile
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(18px);
+  }
+
+  .nav {
+    min-height: 62px;
+    gap: 0.4rem;
+  }
+
+  .brand {
+    min-width: max-content;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-text {
+    font-size: 0.88rem;
+  }
+
+  .brand-text span:last-child {
+    font-size: 0.58rem;
+  }
+
+  /* Nav links: sempre visibili, grid compresso */
+  .nav-links {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.25rem 0.4rem;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    min-height: 62px;
+  }
+
+  .nav-links a,
+  .theme-toggle {
+    min-height: 36px;
+    padding: 0.25rem 0.4rem;
+    font-size: 0.78rem;
+    border-radius: 5px;
+  }
+
+  .nav-links a {
+    color: var(--text);
+  }
+
+  .nav-links a:hover,
+  .theme-toggle:hover {
+    color: var(--neon-cyan);
+    background: var(--bg-alt);
+  }
+
+  .nav-toggle {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    flex-shrink: 0;
+  }
+
+  .nav-toggle span,
+  .nav-toggle span::before,
+  .nav-toggle span::after {
+    display: block;
+    width: 15px;
+    height: 2px;
+    background: var(--text);
+  }
+
+  .nav-toggle[aria-expanded="true"] span {
+    transform: rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded="true"] span::before {
+    transform: rotate(90deg);
+  }
+
+  .nav-toggle[aria-expanded="true"] span::after {
+    transform: scaleX(0);
+  }
+
+  .kebab-toggle {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 3️⃣ BOOT SEQUENCE — Mobile
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  #bootSequence {
+    padding: 0.5rem;
+    overflow-y: auto;
+  }
+  .boot-terminal {
+    font-size: 0.7rem;
+    max-width: 100%;
+    max-height: 60vh;
+    line-height: 1.5;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 4️⃣ HERO & SEZIONI
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .hero,
+  .page-hero,
+  .project-hero {
+    padding-block: clamp(2.5rem, 8vw, 4rem);
+  }
+
+  .section {
+    padding-block: var(--space-section);
+  }
+
+  .section-tight {
+    padding-block: var(--space-section-tight);
+  }
+
+  /* Hero testo + immagine → vertical stacking */
+  .hero-grid,
+  .project-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .section-heading {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 0.4rem;
+  }
+
+  .section-heading .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.2rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 5️⃣ GRID DI CARD — Mobile
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .cv-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .category-grid,
+  .project-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .category-grid:first-child,
+  .project-grid:first-child {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .category-grid[data-density="compact"],
+  .project-grid[data-density="compact"] {
+    grid-template-columns: 1fr;
+  }
+
+  .company-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .settore-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 6️⃣ CARD, BUTTON, INPUT — Mobile
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .card {
+    border-radius: var(--radius);
+    padding: var(--space-card);
+    box-shadow: var(--shadow);
+  }
+
+  .card img,
+  .card video,
+  .card iframe {
+    width: 100%;
+    height: auto;
+  }
+
+  .card .card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 36px;
+  }
+
+  .card .card-body {
+    padding-top: 0;
+  }
+
+  .card .card-title {
+    font-size: 1.05rem;
+  }
+
+  .btn,
+  .card .card-footer button,
+  .project-card button {
+    min-height: 42px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.82rem;
+    border-radius: 6px;
+  }
+
+  button.small,
+  .btn.small {
+    min-height: 32px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.74rem;
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 42px;
+    padding: 0.5rem 0.65rem;
+    font-size: 0.85rem;
+    border-radius: 7px;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 3px solid var(--neon-cyan);
+    outline-offset: 2px;
+  }
+
+  .chip {
+    padding: 0.2rem 0.45rem;
+    font-size: 0.7rem;
+    border-radius: 99px;
+  }
+
+  .badge {
+    padding: 0.12rem 0.4rem;
+    font-size: 0.68rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 7️⃣ FORM & CHARTS — Mobile
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  label {
+    font-size: 0.8rem;
+    min-height: 1.4em;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .field label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.76rem;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+  }
+
+  /* Chart containers */
+  .chart-container,
+  .dashboard-grid,
+  .contact-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chart-container iframe,
+  .chart-container canvas,
+  .chart-container svg {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 200px;
+  }
+
+  .sparkline {
+    max-width: 100%;
+    height: 40px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 8️⃣ TICKER & FOOTER — Mobile
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .ticker-bar .ticker-scroll {
+    font-size: 0.74rem;
+    letter-spacing: 0.02em;
+  }
+
+  .ticker-bar .ticker-label {
+    display: none;
+  }
+
+  .ticker-scroll-inner {
+    padding: 0.2rem 0;
+  }
+
+  footer {
+    padding-block: 1.5rem;
+    font-size: 0.8rem;
+  }
+
+  footer .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 9️⃣ SPACE UTILITY — Mobile
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .gap-sm { gap: 0.35rem !important; }
+  .gap-md { gap: 0.55rem !important; }
+  .gap-lg { gap: 0.8rem !important; }
+
+  .mt-sm { margin-top: 0.4rem !important; }
+  .mt-md { margin-top: 0.6rem !important; }
+  .mt-lg { margin-top: 0.9rem !important; }
+
+  .mb-sm { margin-bottom: 0.4rem !important; }
+  .mb-md { margin-bottom: 0.6rem !important; }
+  .mb-lg { margin-bottom: 0.9rem !important; }
+
+  .p-sm { padding: 0.35rem !important; }
+  .p-md { padding: 0.5rem !important; }
+  .p-lg { padding: 0.7rem !important; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 10️⃣ REDUCED MOTION — Mobile
+ * ───────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
